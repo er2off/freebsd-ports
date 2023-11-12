@@ -1,0 +1,27 @@
+diff --git CMakeLists.txt CMakeLists.txt
+new file mode 100644
+index 000000000..fa0bae6db
+--- /dev/null
++++ CMakeLists.txt
+@@ -0,0 +1,21 @@
++# Custom CMake build system
++# (c) Er2 2023 <er2@dismail.de>
++
++cmake_minimum_required(VERSION 3.10)
++project(LWJGL3)
++
++# Compiles LWJGL3 with ant
++set(ANT ant)
++set(JENV ${CMAKE_COMMAND} -E env JAVACMD=${JAVA} JAVA8_HOME=${JAVA8_HOME})
++add_custom_target(lwjgl3 ALL
++	COMMAND ${JENV} ${ANT} all
++	COMMAND ${JENV} ${ANT} release -Dbuild.offline=yes -Djavadoc.skip=yes
++	USES_TERMINAL
++	WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
++)
++
++# and then compiles glfw with CMake
++set(GLFW_LIBRARY_TYPE SHARED)
++set(GLFW_BUILD_DOCS NO CACHE BOOL	"Do not build documentation" FORCE)
++set(GLFW_INSTALL NO CACHE BOOL		"Do not install GLFW includes and other" FORCE)
++add_subdirectory(glfw)
