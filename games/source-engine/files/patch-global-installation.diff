@@ -1,0 +1,626 @@
+--- appframework/posixapp.cpp.orig	2023-05-05 16:17:06 UTC
++++ appframework/posixapp.cpp
+@@ -118,7 +118,7 @@ bool CSteamApplication::Create( )
+ 	m_pFileSystem = (IFileSystem*)AddSystem( fileSystemModule, FILESYSTEM_INTERFACE_VERSION );
+ 	if ( !m_pFileSystem )
+ 	{
+-		Error( "Unable to load %s", pFileSystemDLL );
++		Error( "Unable to load %s\n", pFileSystemDLL );
+ 		return false;
+ 	}
+ 
+--- dedicated_main/main.cpp.orig	2023-05-05 16:17:06 UTC
++++ dedicated_main/main.cpp
+@@ -188,33 +188,16 @@ static void WaitForDebuggerConnect( int argc, char *ar
+ 
+ int main( int argc, char *argv[] )
+ {
+-	// Must add 'bin' to the path....
+-	char* pPath = getenv("LD_LIBRARY_PATH");
+-	char szBuffer[4096];
+-	char cwd[ MAX_PATH ];
+-	if ( !getcwd( cwd, sizeof(cwd)) )
++	void *dedicated = dlopen( "libdedicated" DLL_EXT_STRING, RTLD_NOW );
++	if ( !dedicated )
+ 	{
+-		printf( "getcwd failed (%s)", strerror(errno));
++		printf( "Failed to open libdedicated" DLL_EXT_STRING " (%s)\n", dlerror());
++		dedicated = dlopen( "dedicated" DLL_EXT_STRING, RTLD_NOW );
+ 	}
+ 
+-	snprintf( szBuffer, sizeof( szBuffer ) - 1, "LD_LIBRARY_PATH=%s/bin:%s", cwd, pPath );
+-	int ret = putenv( szBuffer );
+-	if ( ret )	
+-	{
+-		printf( "%s\n", strerror(errno) );
+-	}
+-	void *tier0 = dlopen( "libtier0" DLL_EXT_STRING, RTLD_NOW );
+-	void *vstdlib = dlopen( "libvstdlib" DLL_EXT_STRING, RTLD_NOW );
+-
+-	const char *pBinaryName = "bin/dedicated" DLL_EXT_STRING;
+-
+-	void *dedicated = dlopen( pBinaryName, RTLD_NOW );
+ 	if ( !dedicated )
+-		dedicated = dlopen( "bin/libdedicated" DLL_EXT_STRING, RTLD_NOW );
+-
+-	if ( !dedicated )
+ 	{
+-		printf( "Failed to open %s (%s)\n", pBinaryName, dlerror());
++		printf( "Failed to open dedicated" DLL_EXT_STRING " (%s)\n", dlerror());
+ 		return -1;
+ 	}
+ 	DedicatedMain_t dedicated_main = (DedicatedMain_t)dlsym( dedicated, "DedicatedMain" );
+@@ -226,9 +209,8 @@ int main( int argc, char *argv[] )
+ 
+ 	WaitForDebuggerConnect( argc, argv, 30 );
+ 
+-	ret = dedicated_main( argc,argv );
++	int ret = dedicated_main( argc,argv );
+ 	dlclose( dedicated );
+-	dlclose( vstdlib );
+-	dlclose( tier0 );
++	return ret;
+ }
+ #endif
+--- dedicated/sys_ded.cpp.orig	2023-05-05 16:17:06 UTC
++++ dedicated/sys_ded.cpp
+@@ -360,12 +360,9 @@ void CDedicatedAppSystemGroup::Destroy()
+ bool GetExecutableName( char *out, int nMaxLen )
+ {
+ #ifdef _WIN32
+-	if ( !::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), out, nMaxLen ) )
+-		return false;
+-	return true;
+-#elif POSIX
+-	Q_strncpy( out, g_szEXEName, nMaxLen );
+-	return true;
++	return !!::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), out, nMaxLen );
++#else
++	return false;
+ #endif
+ }
+ 
+--- engine/sys_dll.cpp.orig	2023-05-05 16:17:06 UTC
++++ engine/sys_dll.cpp
+@@ -342,34 +342,35 @@ bool Sys_MessageBox(const char *title, const char *inf
+ 		return true;
+ 	}
+ 	return false;
+-
+-#elif defined( USE_SDL )
+-
+-	int buttonid = 0;
+-	SDL_MessageBoxData messageboxdata = { 0 };
+-	SDL_MessageBoxButtonData buttondata[] =
++#else
++#if defined( USE_SDL )
++	SDL_Window *dialogParent = GetAssertDialogParent();
++	if (dialogParent)
+ 	{
+-		{ SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT,	1,	"OK"		},
+-		{ SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT,	0,	"Cancel"	},
+-	};
++		int buttonid = 0;
++		SDL_MessageBoxData messageboxdata = { 0 };
++		SDL_MessageBoxButtonData buttondata[] =
++		{
++			{ SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT,	1,	"OK"		},
++			{ SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT,	0,	"Cancel"	},
++		};
+ 
+-	messageboxdata.window = GetAssertDialogParent();
+-	messageboxdata.title = title;
+-	messageboxdata.message = info;
+-	messageboxdata.numbuttons = bShowOkAndCancel ? 2 : 1;
+-	messageboxdata.buttons = buttondata;
++		messageboxdata.window = GetAssertDialogParent();
++		messageboxdata.title = title;
++		messageboxdata.message = info;
++		messageboxdata.numbuttons = bShowOkAndCancel ? 2 : 1;
++		messageboxdata.buttons = buttondata;
+ 
+-	SDL_ShowMessageBox( &messageboxdata, &buttonid );
+-	return ( buttonid == 1 );
+-
+-#elif defined( POSIX )
+-
+-	Warning( "%s\n", info );
+-	return true;
+-
+-#else
+-#error "implement me"
++		SDL_ShowMessageBox( &messageboxdata, &buttonid );
++		return ( buttonid == 1 );
++	}
++	else
+ #endif
++	{
++		Warning( "%s\n", info );
++		return true;
++	}
++#endif
+ }
+ 
+ bool g_bUpdateMinidumpComment = true;
+@@ -464,7 +465,7 @@ void Sys_Error_Internal( bool bMinidump, const char *e
+ 		// Doing this doesn't quite work the way we want because there is no "crashing" thread
+ 		// and we see "No thread was identified as the cause of the crash; No signature could be created because we do not know which thread crashed" on the back end
+ 		//SteamAPI_WriteMiniDump( 0, NULL, build_number() );
+-		printf("\n ##### Sys_Error: %s", text );
++		printf("\n ##### Sys_Error: %s\n", text );
+ 		fflush(stdout );
+ 
+ 		raise(SIGTRAP);
+@@ -1117,7 +1118,6 @@ void Sys_ShutdownGame( void )
+ 
+ CreateInterfaceFn g_ServerFactory;
+ 
+-
+ #pragma optimize( "g", off )
+ static bool LoadThisDll( char *szDllFilename, bool bIsServerOnly )
+ {
+@@ -1255,7 +1255,7 @@ void LoadEntityDLLs( const char *szBaseDir, bool bIsSe
+ 
+ 	if ( serverGameDLL )
+ 	{
+-		Msg("server%s loaded for \"%s\"\n", DLL_EXT_STRING, (char *)serverGameDLL->GetGameDescription());
++		Msg("server" DLL_EXT_STRING " loaded for \"%s\"\n", (char *)serverGameDLL->GetGameDescription());
+ 	}
+ }
+ 
+--- filesystem/basefilesystem.cpp.orig	2023-05-05 16:17:06 UTC
++++ filesystem/basefilesystem.cpp
+@@ -5057,20 +5057,17 @@ CSysModule *CBaseFileSystem::LoadModule( const char *p
+ 		if ( FilterByPathID( &m_SearchPaths[i], lookup ) )
+ 			continue;
+ 
+-		Q_snprintf( tempPathID, sizeof(tempPathID), "%s%s", m_SearchPaths[i].GetPathString(), pFileName ); // append the path to this dir.
+-		pModule = Sys_LoadModule( tempPathID );
+-		if ( pModule ) 
+-		{
+-			// we found the binary in one of our search paths
+-			return pModule;
+-		}
+-
+ #ifdef POSIX
+ 		Q_snprintf( tempPathID, sizeof(tempPathID), "%slib%s", m_SearchPaths[i].GetPathString(), pFileName ); // append the path to this dir.
+ 		pModule = Sys_LoadModule( tempPathID );
+ 		if ( pModule )
+ 			return pModule;
+ #endif
++
++		Q_snprintf( tempPathID, sizeof(tempPathID), "%s%s", m_SearchPaths[i].GetPathString(), pFileName ); // append the path to this dir.
++		pModule = Sys_LoadModule( tempPathID );
++		if ( pModule )
++			return pModule;
+ 	}
+ #endif
+ 
+--- game/client/wscript.orig	2023-05-05 16:17:06 UTC
++++ game/client/wscript
+@@ -65,9 +65,9 @@ def build(bld):
+ 		'ZLIB'
+ 	]
+ 
+-	install_path = bld.env.PREFIX
++	install_path = bld.env.LIBDIR
+ 	if bld.env.DEST_OS != 'android':
+-		install_path += '/'+bld.env.GAMES+'/bin'
++		install_path += '/'+bld.env.GAMES
+ 
+ 	source = [ 'in_touch.cpp' ]
+ 	if bld.env.DEST_OS == 'win32':
+--- game/server/wscript.orig	2023-05-05 16:17:06 UTC
++++ game/server/wscript
+@@ -59,9 +59,9 @@ def build(bld):
+ 	if bld.env.DEST_OS == 'win32':
+ 		libs += ['USER32']
+ 
+-	install_path = bld.env.PREFIX
++	install_path = bld.env.LIBDIR
+ 	if bld.env.DEST_OS != 'android':
+-		install_path += '/'+bld.env.GAMES+'/bin'
++		install_path += '/'+bld.env.GAMES
+ 
+ 	source = game["sources"] + ['../../public/tier0/memoverride.cpp']
+ 	includes += game["includes"]
+--- launcher_main/main.cpp.orig	2023-05-05 16:17:06 UTC
++++ launcher_main/main.cpp
+@@ -216,31 +216,12 @@ static void WaitForDebuggerConnect( int argc, char *ar
+ 
+ int main( int argc, char *argv[] )
+ {
+-	char ld_path[4196];
+-	char *path = "bin/";
+-	char *ld_env;
+-
+-	if( (ld_env = getenv("LD_LIBRARY_PATH")) != NULL )
+-	{
+-		snprintf(ld_path, sizeof(ld_path), "%s:bin/", ld_env);
+-		path = ld_path;
+-	}
+-
+-	setenv("LD_LIBRARY_PATH", path, 1);
+-
+-	extern char** environ;
+-	if( getenv("NO_EXECVE_AGAIN") == NULL )
+-	{
+-		setenv("NO_EXECVE_AGAIN", "1", 1);
+-		execve(argv[0], argv, environ);
+-	}
+-
+-	void *launcher = dlopen( "bin/liblauncher" DLL_EXT_STRING, RTLD_NOW );
++	void *launcher = dlopen( "liblauncher" DLL_EXT_STRING, RTLD_NOW );
+ 	if ( !launcher )
++	{
+ 		fprintf( stderr, "%s\nFailed to load the launcher\n", dlerror() );
+-
+-	if( !launcher )
+-		launcher = dlopen( "bin/launcher" DLL_EXT_STRING, RTLD_NOW );
++		launcher = dlopen( "launcher" DLL_EXT_STRING, RTLD_NOW );
++	}
+ 
+ 	if ( !launcher )
+ 	{
+--- launcher/launcher.cpp.orig	2023-05-05 16:17:06 UTC
++++ launcher/launcher.cpp
+@@ -239,11 +239,7 @@ void SetGameDirectory( const char *game )
+ bool GetExecutableName( char *out, int outSize )
+ {
+ #ifdef WIN32
+-	if ( !::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), out, outSize ) )
+-	{
+-		return false;
+-	}
+-	return true;
++	return !!::GetModuleFileName( ( HINSTANCE )GetModuleHandle( NULL ), out, outSize );
+ #else
+ 	return false;
+ #endif
+--- materialsystem/cmaterialsystem.cpp.orig	2023-05-05 16:17:06 UTC
++++ materialsystem/cmaterialsystem.cpp
+@@ -672,7 +672,7 @@ bool CMaterialSystem::Connect( CreateInterfaceFn facto
+ 	g_pLauncherMgr = (ILauncherMgr *)factory( "SDLMgrInterface001" /*SDL_MGR_INTERFACE_VERSION*/, NULL );		
+ 	if ( !g_pLauncherMgr )
+ 	{
+-		return false;
++		Warning("Cannot connect SDL\n");
+ 	}
+ #endif // USE_SDL
+ #endif // !DEDICATED
+@@ -3102,8 +3102,6 @@ void CMaterialSystem::ResetTempHWMemory( bool bExiting
+ //-----------------------------------------------------------------------------
+ void CMaterialSystem::CacheUsedMaterials( )
+ {
+-	printf("Cache materials\n");
+-
+ 	g_pShaderAPI->EvictManagedResources();
+ 
+ 	for (MaterialHandle_t i = FirstMaterial(); i != InvalidMaterial(); i = NextMaterial(i) )
+--- public/filesystem_init.cpp.orig	2023-05-05 16:17:06 UTC
++++ public/filesystem_init.cpp
+@@ -308,54 +308,13 @@ static bool Sys_GetExecutableName( char *out, int len 
+ bool FileSystem_GetExecutableDir( char *exedir, int exeDirLen )
+ {
+ #ifdef ANDROID
+-	Q_snprintf( exedir, exeDirLen, "%s", getenv("APP_LIB_PATH") );
++	Q_strncpy( exedir, getenv("APP_LIB_PATH"), exeDirLen );
+ #else
+-	exedir[0] = 0;
+-
+-	if ( s_bUseVProjectBinDir )
+-	{
+-		const char *pProject = GetVProjectCmdLineValue();
+-		if ( !pProject )
+-		{
+-			// Check their registry.
+-			pProject = getenv( GAMEDIR_TOKEN );
+-		}
+-		if ( pProject )
+-		{
+-			Q_snprintf( exedir, exeDirLen, "%s%c..%cbin", pProject, CORRECT_PATH_SEPARATOR, CORRECT_PATH_SEPARATOR );
+-			return true;
+-		}
+-		return false;
+-	}
+-
+-	if ( !Sys_GetExecutableName( exedir, exeDirLen ) )
+-		return false;
+-	Q_StripFilename( exedir );
+-
+-	if ( IsX360() )
+-	{
+-		// The 360 can have its exe and dlls reside on different volumes
+-		// use the optional basedir as the exe dir
+-		if ( CommandLine()->FindParm( "-basedir" ) )
+-		{
+-			strcpy( exedir, CommandLine()->ParmValue( "-basedir", "" ) );
+-		}
+-	}
+-
+-	Q_FixSlashes( exedir );
+-
+-	const char* libDir = "bin";
+-
+-	// Return the bin directory as the executable dir if it's not in there
+-	// because that's really where we're running from...
+-	char ext[MAX_PATH];
+-	Q_StrRight( exedir, 4, ext, sizeof( ext ) );
+-	if ( ext[0] != CORRECT_PATH_SEPARATOR || Q_stricmp( ext+1, libDir ) != 0 )
+-	{
+-		Q_strncat( exedir, CORRECT_PATH_SEPARATOR_S, exeDirLen, COPY_ALL_CHARACTERS );
+-		Q_strncat( exedir, libDir, exeDirLen, COPY_ALL_CHARACTERS );
+-		Q_FixSlashes( exedir );
+-	}
++# ifdef _WIN32
++	Q_strncpy( exedir, "./bin", exeDirLen );
++# else
++	Q_strncpy( exedir, LIBDIR, exeDirLen );
++# endif
+ #endif
+ 
+ 	return true;
+@@ -364,17 +323,15 @@ bool FileSystem_GetExecutableDir( char *exedir, int ex
+ static bool FileSystem_GetBaseDir( char *baseDir, int baseDirLen )
+ {
+ #ifdef ANDROID
+-	strncpy(baseDir, getenv("VALVE_GAME_PATH"), baseDirLen);
+-	return true;
++	Q_strncpy(baseDir, getenv("VALVE_GAME_PATH"), baseDirLen);
+ #else
+-	if ( FileSystem_GetExecutableDir( baseDir, baseDirLen ) )
+-	{
+-		Q_StripFilename( baseDir );
+-		return true;
+-	}
+-
+-	return false;
++	// get relative base dir which appends to other paths
++	// allows to run from everywhere
++	// "hl2/portal" -> "hl2"; "hl2" -> ""
++	Q_strncpy( baseDir, CommandLine()->ParmValue("-game", ""), baseDirLen );
++	Q_StripFilename( baseDir );
+ #endif
++	return true;
+ }
+ 
+ void LaunchVConfig()
+@@ -1094,16 +1051,23 @@ FSReturnCode_t FileSystem_SetBasePaths( IFileSystem *p
+ {
+ 	pFileSystem->RemoveSearchPaths( "EXECUTABLE_PATH" );
+ 
+-	char executablePath[MAX_PATH];
+-	if ( !FileSystem_GetExecutableDir( executablePath, sizeof( executablePath ) )	)
++	char path[MAX_PATH];
++	if ( !FileSystem_GetExecutableDir( path, MAX_PATH ) )
+ 		return SetupFileSystemError( false, FS_INVALID_PARAMETERS, "FileSystem_GetExecutableDir failed." );
+ 
+-	pFileSystem->AddSearchPath( executablePath, "EXECUTABLE_PATH" );
++	pFileSystem->AddSearchPath( path, "EXECUTABLE_PATH" );
+ 
+-	if ( !FileSystem_GetBaseDir( executablePath, sizeof( executablePath ) )  )
++	if ( !FileSystem_GetBaseDir( path, MAX_PATH ) )
+ 		return SetupFileSystemError( false, FS_INVALID_PARAMETERS, "FileSystem_GetBaseDir failed." );
+ 
+-	pFileSystem->AddSearchPath( executablePath, "BASE_PATH" );
++	pFileSystem->AddSearchPath( path, "BASE_PATH" );
++
++	// path for client/server libraries
++	// "hl2/portal" -> "LIBDIR/portal"; "hl2" -> "LIBDIR/hl2"
++	char gamePath[MAX_PATH];
++	V_FileBase( CommandLine()->ParmValue("-game"), gamePath, MAX_PATH );
++	Q_snprintf( path, MAX_PATH, "%s/%s", LIBDIR, gamePath );
++	pFileSystem->AddSearchPath( path, "GAMEBIN" );
+ 
+ 	return FS_OK;
+ }
+--- scripts/tests-macos-amd64.sh.orig	2023-05-05 16:17:06 UTC
++++ scripts/tests-macos-amd64.sh
+@@ -4,4 +4,4 @@ git submodule init && git submodule update
+ ./waf configure -T release --sanitize=address,undefined --disable-warns --tests -8 --prefix=out/ $* &&
+ ./waf install &&
+ cd out &&
+-DYLD_LIBRARY_PATH=bin/ ./unittest || exit 1
++./bin/unittest || exit 1
+--- scripts/tests-ubuntu-amd64.sh.orig	2023-05-05 16:17:06 UTC
++++ scripts/tests-ubuntu-amd64.sh
+@@ -7,4 +7,4 @@ sudo apt-get install -y libbz2-dev
+ ./waf configure -T release --sanitize=address,undefined --disable-warns --tests --prefix=out/ --64bits $* &&
+ ./waf install &&
+ cd out &&
+-LD_LIBRARY_PATH=bin/ ./unittest
++./bin/unittest
+--- scripts/tests-ubuntu-i386.sh.orig	2023-05-05 16:17:06 UTC
++++ scripts/tests-ubuntu-i386.sh
+@@ -8,4 +8,4 @@ sudo apt-get install -y g++-multilib gcc-multilib libb
+ PKG_CONFIG_PATH=/usr/lib/i386-linux-gnu/pkgconfig ./waf configure -T release --sanitize=address,undefined --disable-warns --tests --prefix=out/ $* &&
+ ./waf install &&
+ cd out &&
+-LD_LIBRARY_PATH=bin/ ./unittest
++./bin/unittest
+--- tier0/assert_dialog.cpp.orig	2023-05-05 16:17:06 UTC
++++ tier0/assert_dialog.cpp
+@@ -369,6 +369,16 @@ DBG_INTERFACE struct SDL_Window * GetAssertDialogParen
+ {
+ 	return g_SDLWindow;
+ }
++#elif !defined( _WIN32 )
++DBG_INTERFACE void SetAssertDialogParent( void *window)
++{
++	(void)window;
++}
++
++DBG_INTERFACE void * GetAssertDialogParent()
++{
++	return NULL;
++}
+ #endif
+ 
+ DBG_INTERFACE bool ShouldUseNewAssertDialog()
+--- tier1/interface.cpp.orig	2023-05-05 16:17:06 UTC
++++ tier1/interface.cpp
+@@ -269,12 +269,6 @@ static bool s_bRunningWithDebugModules = false;
+ 
+ #ifdef POSIX
+ 
+-#ifdef ANDROID
+-#define DEFAULT_LIB_PATH ""
+-#else
+-#define DEFAULT_LIB_PATH "bin/"
+-#endif
+-
+ bool foundLibraryWithPrefix( char *pModuleAbsolutePath, size_t AbsolutePathSize, const char *pPath, const char *pModuleName )
+ {
+ 	char str[1024];
+@@ -283,23 +277,11 @@ bool foundLibraryWithPrefix( char *pModuleAbsolutePath
+ 	bool bFound = false;
+ 
+ 	struct stat statBuf;
+-	Q_snprintf(pModuleAbsolutePath, AbsolutePathSize, "%s/" DEFAULT_LIB_PATH "lib%s", pPath, str);
++	Q_snprintf(pModuleAbsolutePath, AbsolutePathSize, "%s/lib%s", pPath, str);
+ 	bFound |= stat(pModuleAbsolutePath, &statBuf) == 0;
+ 
+ 	if( !bFound )
+ 	{
+-		Q_snprintf(pModuleAbsolutePath, AbsolutePathSize, "%s/" DEFAULT_LIB_PATH "%s", pPath, str);
+-		bFound |= stat(pModuleAbsolutePath, &statBuf) == 0;
+-	}
+-
+-	if( !bFound )
+-	{
+-		Q_snprintf(pModuleAbsolutePath, AbsolutePathSize, "%s/lib%s", pPath, str);
+-		bFound |= stat(pModuleAbsolutePath, &statBuf) == 0;
+-	}
+-
+-	if( !bFound )
+-	{
+ 		Q_snprintf(pModuleAbsolutePath, AbsolutePathSize, "%s/%s", pPath, str);
+ 		bFound |= stat(pModuleAbsolutePath, &statBuf) == 0;
+ 	}
+@@ -321,7 +303,7 @@ CSysModule *Sys_LoadModule( const char *pModuleName, S
+ 	// prior to the call to this routine.
+ 	char szCwd[1024];
+ #ifdef POSIX
+-	char szModuleName[1024] = { 0 };
++	char szModuleName[1024] = { '\0' };
+ #endif
+ 	HMODULE hDLL = NULL;
+ 
+@@ -367,7 +349,7 @@ CSysModule *Sys_LoadModule( const char *pModuleName, S
+ 		}
+ 
+ #elif defined( POSIX )
+-		if( !foundLibraryWithPrefix(szAbsoluteModuleName, sizeof(szAbsoluteModuleName), szCwd, pModuleName) )
++		if( !foundLibraryWithPrefix(szAbsoluteModuleName, sizeof(szAbsoluteModuleName), LIBDIR, pModuleName) )
+ 		{
+ 			Warning("Can't find module - %s\n", pModuleName);
+ 			return reinterpret_cast<CSysModule *>(hDLL);
+--- utils/unittest/unittest.cpp.orig	2023-05-05 16:17:06 UTC
++++ utils/unittest/unittest.cpp
+@@ -94,7 +94,7 @@ bool CUnitTestApp::Create()
+ 
+ #ifdef WIN32
+ 	WIN32_FIND_DATA findFileData;
+-	HANDLE hFind= FindFirstFile("tests/*.dll", &findFileData);
++	HANDLE hFind= FindFirstFile("bin/tests/*.dll", &findFileData);
+ 
+ 	while (hFind != INVALID_HANDLE_VALUE)
+ 	{
+@@ -122,7 +122,7 @@ bool CUnitTestApp::Create()
+ #elif POSIX
+ 	DIR *d;
+ 	struct dirent *dir;
+-	d = opendir("tests");
++	d = opendir(LIBDIR "/tests");
+ 	if (d)
+ 	{
+ 		while ((dir = readdir(d)) != NULL)
+--- waf.orig	2023-05-05 16:17:06 UTC
++++ waf
+@@ -1,4 +1,4 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # encoding: latin-1
+ # Thomas Nagy, 2005-2018
+ #
+--- wscript.orig	2023-05-05 16:17:06 UTC
++++ wscript
+@@ -1,4 +1,5 @@
+ #! /usr/bin/env python
++# vim: noexpandtab
+ # encoding: utf-8
+ # nillerusr
+ 
+@@ -461,19 +462,34 @@ def configure(conf):
+ 
+ 	cflags, linkflags = conf.get_optimization_flags()
+ 
++	# installation paths
++	if conf.env.DEST_OS == 'android':
++		conf.env.LIBDIR = conf.env.BINDIR = conf.env.PREFIX
++	elif conf.env.DEST_OS == 'win32':
++		# mustdie
++		conf.env.LIBDIR = conf.env.PREFIX + '/bin'
++		conf.env.BINDIR = conf.env.PREFIX
++	else:
++		conf.env.LIBDIR = conf.env.LIBDIR + '/srceng'
+ 
++	conf.env.TESTDIR = conf.env.LIBDIR + '/tests'
++	conf.define('BINDIR', conf.env.BINDIR)
++	conf.define('LIBDIR', conf.env.LIBDIR)
++
+ 	flags = []
+ 
+ 	if conf.options.SANITIZE:
+ 		flags += ['-fsanitize=%s'%conf.options.SANITIZE, '-fno-sanitize=vptr']
+ 
+ 	if conf.env.DEST_OS != 'win32':
+-		flags += ['-pipe', '-fPIC', '-L'+os.path.abspath('.')+'/lib/'+conf.env.DEST_OS+'/'+conf.env.DEST_CPU+'/']
++		flags += ['-pipe', '-fPIC']
++		conf.env.RPATH = [conf.env.LIBDIR]
+ 	if conf.env.COMPILER_CC != 'msvc':
+ 		flags += ['-pthread']
+ 
+ 	if conf.env.DEST_OS == 'android':
+ 		flags += [
++			'-L'+os.path.abspath('.')+'/lib/android/'+conf.env.DEST_CPU+'/',
+ 			'-I'+os.path.abspath('.')+'/thirdparty/curl/include',
+ 			'-I'+os.path.abspath('.')+'/thirdparty/SDL',
+ 			'-I'+os.path.abspath('.')+'/thirdparty/openal-soft/include/',
+@@ -484,7 +500,10 @@ def configure(conf):
+ 		]
+ 
+ 		flags += ['-funwind-tables', '-g']
+-	elif conf.env.COMPILER_CC != 'msvc' and conf.env.DEST_OS != 'darwin' and conf.env.DEST_CPU in ['x86', 'x86_64']:
++	elif conf.env.DEST_OS == 'win32':
++		flags += ['-L'+os.path.abspath('.')+'/lib/win32/'+conf.env.DEST_CPU+'/']
++
++	if conf.env.COMPILER_CC != 'msvc' and conf.env.DEST_OS != 'darwin' and conf.env.DEST_CPU in ['x86', 'x86_64']:
+ 		flags += ['-march=core2']
+ 
+ 	if conf.env.DEST_CPU in ['x86', 'x86_64']:
+@@ -495,9 +514,6 @@ def configure(conf):
+ 	if conf.env.DEST_CPU == 'arm':
+ 		flags += ['-mfpu=neon-vfpv4']
+ 
+-	if conf.env.DEST_OS == 'freebsd':
+-		linkflags += ['-lexecinfo']
+-
+ 	if conf.env.DEST_OS != 'win32':
+ 		cflags += flags
+ 		linkflags += flags
+@@ -570,14 +586,6 @@ def configure(conf):
+ 	conf.env.append_unique('INCLUDES', [os.path.abspath('common/')])
+ 
+ 	check_deps( conf )
+-
+-	# indicate if we are packaging for Linux/BSD
+-	if conf.env.DEST_OS != 'android':
+-		conf.env.LIBDIR = conf.env.PREFIX+'/bin/'
+-		conf.env.TESTDIR = conf.env.PREFIX+'/tests/'
+-		conf.env.BINDIR = conf.env.PREFIX
+-	else:
+-		conf.env.LIBDIR = conf.env.BINDIR = conf.env.PREFIX
+ 
+ 	if conf.options.CCACHE:
+ 		conf.env.CC.insert(0, 'ccache')

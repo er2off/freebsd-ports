@@ -1,0 +1,31 @@
+--- tier0/wscript.orig	2023-05-05 16:17:06 UTC
++++ tier0/wscript
+@@ -17,6 +17,8 @@ def configure(conf):
+ 	conf.define('TIER0_DLL_EXPORT',1)
+ #	conf.define('NO_HOOK_MALLOC',1)
+ 
++	if conf.env.DEST_OS == 'freebsd': conf.check_cc(lib='execinfo')
++
+ def build(bld):
+ 	source = [
+ 		'assert_dialog.cpp',
+@@ -82,6 +84,7 @@ def build(bld):
+ 		libs = ['ADVAPI32', 'WS2_32']
+ 	else:
+ 		libs = ['DL', 'M', 'LOG']
++	if bld.env.DEST_OS == 'freebsd': libs += ['EXECINFO']
+ 
+ 	install_path = bld.env.LIBDIR
+ 
+--- wscript.orig	2023-05-05 16:17:06 UTC
++++ wscript
+@@ -591,7 +591,8 @@ def configure(conf):
+ 		conf.add_subproject(projects['game'])
+ 
+ def build(bld):
+-	os.environ["CCACHE_DIR"] = os.path.abspath('.ccache/'+bld.env.COMPILER_CC+'/'+bld.env.DEST_OS+'/'+bld.env.DEST_CPU)
++	if not os.environ.get('CCACHE_DIR'):
++		os.environ["CCACHE_DIR"] = os.path.abspath('.ccache/'+bld.env.COMPILER_CC+'/'+bld.env.DEST_OS+'/'+bld.env.DEST_CPU)
+ 
+ 	if bld.env.DEST_OS in ['win32', 'android']:
+ 		sdl_name = 'SDL2.dll' if bld.env.DEST_OS == 'win32' else 'libSDL2.so'
