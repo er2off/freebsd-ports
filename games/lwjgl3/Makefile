@@ -38,10 +38,12 @@ OPTIONS_SUB=		yes
 MAKE_ENV+=	JAVA8_HOME=${LOCALBASE}/openjdk8
 MAKE_ARGS+=	-Dkotlinc=${LOCALBASE}/share/kotlin
 
+DOCS_MAKE_ARGS_OFF=	-Djavadoc.skip=yes
+
 LIBSDIR=	${WRKSRC}/bin/libs/native/freebsd/*/org/lwjgl
 
 do-install:
-	@cd ${BUILD_WRKSRC} && ${SETENV} ${MAKE_ENV} ${ANT} release ${MAKE_ARGS} #-Dbuild.offline=yes -Djavadoc.skip=yes
+	@cd ${BUILD_WRKSRC} && ${SETENV} ${MAKE_ENV} ${ANT} release ${MAKE_ARGS}
 
 	@${MKDIR} ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}
 	@${MKDIR} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}
