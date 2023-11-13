@@ -18,7 +18,7 @@ index bf8f96ae6..7386619da 100644
 \ No newline at end of file
 +}
 diff --git build.xml build.xml
-index d0fad8224..d01a4b6c5 100644
+index d0fad8224..2f6fe1af7 100644
 --- build.xml
 +++ build.xml
 @@ -226,6 +226,7 @@
@@ -49,8 +49,8 @@ index d0fad8224..d01a4b6c5 100644
                  <get-release platform="linux" arch="arm32" file="lib@{native-library}.so" if:set="auto-natives"/>
                  <get-release platform="linux" arch="arm32" file="lib@{native-library}.so.git" if:set="git-revision"/>
  
-+                <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so" if:set="auto-natives"/>
-+                <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so.git" if:set="git-revision"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so" if:set="auto-natives"/> -->
++                <!-- <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so.git" if:set="git-revision"/> -->
 +
                  <get-release platform="macos" arch="x64" file="lib@{native-library}.dylib" if:set="auto-natives"/>
                  <get-release platform="macos" arch="x64" file="lib@{native-library}.dylib.git" if:set="git-revision"/>
@@ -81,7 +81,18 @@ index d0fad8224..d01a4b6c5 100644
                  <macos-content><macos/></macos-content>
                  <macos-arm64-content><macos-arm64/></macos-arm64-content>
                  <windows-content><windows/></windows-content>
-@@ -1610,6 +1621,9 @@
+@@ -1538,6 +1549,10 @@
+                 <get-release platform="linux" arch="arm32" file="libassimp.so.git"/>
+                 <get-release platform="linux" arch="arm32" file="libdraco.so"/>
+ 
++                <get-release platform="freebsd" arch="x64" file="libassimp.so"/>
++                <get-release platform="freebsd" arch="x64" file="libassimp.so.git"/>
++                <get-release platform="freebsd" arch="x64" file="libdraco.so"/>
++
+                 <get-release platform="macos" arch="x64" file="libassimp.dylib"/>
+                 <get-release platform="macos" arch="x64" file="libassimp.dylib.git"/>
+                 <get-release platform="macos" arch="x64" file="libdraco.dylib"/>
+@@ -1610,6 +1625,9 @@
                  <get-release platform="linux" arch="arm32" file="libglfw.so"/>
                  <get-release platform="linux" arch="arm32" file="libglfw.so.git"/>
  
@@ -91,32 +102,40 @@ index d0fad8224..d01a4b6c5 100644
                  <get-release platform="macos" arch="x64" file="libglfw.dylib"/>
                  <get-release platform="macos" arch="x64" file="libglfw.dylib.git"/>
                  <get-release platform="macos" arch="x64" file="libglfw_async.dylib"/>
-@@ -1714,6 +1728,9 @@
+@@ -1649,6 +1667,7 @@
+                 <get-release platform="linux" arch="x64" file="libktx.so"/>
+                 <get-release platform="linux" arch="arm64" file="libktx.so"/>
+                 <get-release platform="linux" arch="arm32" file="libktx.so"/>
++                <get-release platform="freebsd" arch="x64" file="libktx.so"/>
+                 <get-release platform="macos" arch="x64" file="libktx.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="libktx.dylib"/>
+                 <get-release platform="windows" arch="x64" file="ktx.dll"/>
+@@ -1714,6 +1733,9 @@
                  <get-release platform="linux" arch="arm32" file="libopenal.so"/>
                  <get-release platform="linux" arch="arm32" file="libopenal.so.git"/>
  
-+                <get-release platform="freebsd" arch="x64" file="libopenal.so"/>
-+                <get-release platform="freebsd" arch="x64" file="libopenal.so.git"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="libopenal.so"/> -->
++                <!-- <get-release platform="freebsd" arch="x64" file="libopenal.so.git"/> -->
 +
                  <get-release platform="macos" arch="x64" file="libopenal.dylib"/>
                  <get-release platform="macos" arch="x64" file="libopenal.dylib.git"/>
  
-@@ -1747,6 +1764,10 @@
+@@ -1747,6 +1769,10 @@
                  <get-release platform="linux" arch="x64" file="libopenvr_api.so"/>
                  <get-release platform="linux" arch="x64" file="libopenvr_api.so.git"/>
  
-+                <get-release platform="freebsd" arch="x64" file="liblwjgl_openvr.so"/>
-+                <get-release platform="freebsd" arch="x64" file="libopenvr_api.so"/>
-+                <get-release platform="freebsd" arch="x64" file="libopenvr_api.so.git"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_openvr.so"/> -->
++                <!-- <get-release platform="freebsd" arch="x64" file="libopenvr_api.so"/> -->
++                <!-- <get-release platform="freebsd" arch="x64" file="libopenvr_api.so.git"/> -->
 +
                  <get-release platform="macos" arch="x64" file="liblwjgl_openvr.dylib"/>
                  <get-release platform="macos" arch="x64" file="libopenvr_api.dylib"/>
                  <get-release platform="macos" arch="x64" file="libopenvr_api.dylib.git"/>
-@@ -1826,6 +1847,7 @@
+@@ -1826,6 +1852,7 @@
          <release-module name="sse" title="SSE" if:true="${binding.sse}">
              <natives>
                  <get-release platform="linux" arch="x64" file="liblwjgl_sse.so"/>
-+                <get-release platform="freebsd" arch="x64" file="liblwjgl_sse.so"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_sse.so"/> -->
                  <get-release platform="macos" arch="x64" file="liblwjgl_sse.dylib"/>
                  <get-release platform="windows" arch="x64" file="lwjgl_sse.dll"/>
                  <get-release platform="windows" arch="x86" file="lwjgl_sse.dll"/>
@@ -154,10 +173,10 @@ index 6fc879679..b72cfd207 100644
  
 diff --git config/freebsd/build.xml config/freebsd/build.xml
 new file mode 100644
-index 000000000..ee5be205b
+index 000000000..1fd107efe
 --- /dev/null
 +++ config/freebsd/build.xml
-@@ -0,0 +1,496 @@
+@@ -0,0 +1,481 @@
 +<!--
 +  ~ Copyright LWJGL. All rights reserved.
 +  ~ License terms: https://www.lwjgl.org/license
@@ -192,8 +211,6 @@ index 000000000..ee5be205b
 +                <arg line="-U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=0 -D_GNU_SOURCE"/>
 +                <arg line="-D_FILE_OFFSET_BITS=64"/>
 +
-+                <arg value="-I/usr/include"/>
-+                <arg value="-I/usr/local/include"/>
 +                <arg value="-I${jni.headers}"/>
 +                <arg value="-I${jni.headers}/freebsd"/>
 +
@@ -334,22 +351,16 @@ index 000000000..ee5be205b
 +                    <include name="${module.lwjgl}/jawt/src/generated/c/*.c" if:true="${binding.jawt}"/>
 +                </fileset>
 +            </source>
-+<!--
 +            <beforeLink>
 +                <parallel threadsPerProcessor="2" failonany="true" unless:set="lib-dependencies-uptodate">
 +                    <update-dependency module="core" artifact="core/libffi.a"/>
 +                </parallel>
 +            </beforeLink>
-+-->
 +            <link>
-+<!--
 +                <fileset dir="${lib.native}/org/lwjgl">
 +                    <include name="libffi.a"/>
 +                </fileset>
-+-->
-+                <arg value="-L/usr/local/lib"/>
 +                <arg value="-ldl"/>
-+                <arg value="-lffi"/>
 +            </link>
 +        </build>
 +
@@ -383,7 +394,6 @@ index 000000000..ee5be205b
 +        </build>
 +
 +        <!-- Meow -->
-+<!--
 +        <sequential if:true="${binding.meow}">
 +            <local name="meow.flags"/>
 +            <condition property="meow.flags" value="-march=armv8-a+crypto" else="-maes -msse4.2">
@@ -391,7 +401,6 @@ index 000000000..ee5be205b
 +            </condition>
 +            <build module="meow" simple="true" flags="-Werror -Wfatal-errors ${meow.flags}"/>
 +        </sequential>
-+-->
 +
 +        <!-- meshoptimizer -->
 +        <build module="meshoptimizer" simple="true" linker="c++" if:true="${binding.meshoptimizer}">
@@ -417,7 +426,7 @@ index 000000000..ee5be205b
 +        <build module="nfd" simple="true" linker="c++" if:true="${binding.nfd}">
 +            <beforeCompile>
 +                <compile lang="c++">
-+                    <arg line="-I/usr/local/include/gtk-3.0 -I/usr/local/include/glib-2.0 -I/usr/local/lib/glib-2.0/include -I/usr/local/include/pango-1.0 -I/usr/local/include/harfbuzz -I/usr/local/include/cairo -I/usr/local/include/gdk-pixbuf-2.0 -I/usr/local/include/atk-1.0"/>
++                    <arg line="-I/usr/local/include -I/usr/local/include/gtk-3.0 -I/usr/local/include/glib-2.0 -I/usr/local/lib/glib-2.0/include -I/usr/local/include/pango-1.0 -I/usr/local/include/harfbuzz -I/usr/local/include/cairo -I/usr/local/include/gdk-pixbuf-2.0 -I/usr/local/include/atk-1.0"/>
 +                    <arg value="-I${src.main.rel}/include"/>
 +                    <fileset dir="." includes="${src.main}/nfd_gtk.cpp"/>
 +                </compile>
@@ -479,7 +488,6 @@ index 000000000..ee5be205b
 +        </build>
 +
 +        <!-- Remotery -->
-+<!--
 +        <build module="remotery" if:true="${binding.remotery}">
 +            <source>
 +                <arg value="-I${src.main.rel}"/>
@@ -488,10 +496,9 @@ index 000000000..ee5be205b
 +            <link>
 +                <arg value="-ldl"/>
 +                <arg value="-lm"/>
-+                <arg value="-L/usr/local/lib -lGL -lGLX"/>
++                <arg line="-L/usr/local/lib -lGL -lGLX"/>
 +            </link>
 +        </build>
-+-->
 +
 +        <!-- rpmalloc -->
 +        <build_simple module="rpmalloc"/>
@@ -570,18 +577,17 @@ index 000000000..ee5be205b
 +        </build>
 +
 +        <!-- Vulkan Memory Allocator -->
-+<!--
 +        <build module="vma" lang="c++" if:true="${binding.vma}">
 +            <source>
 +                <arg value="-I${src.main.rel}"/>
 +                <arg value="-I${module.lwjgl.rel}/vulkan/src/main/c"/>
++                <arg value="-Wno-nullability-completeness"/>
 +                <fileset dir="." includes="${src.generated}/*.cpp"/>
 +            </source>
 +            <link>
 +                <arg value="-latomic" if:set="build.arch.arm"/>
 +            </link>
 +        </build>
-+-->
 +
 +        <!-- xxHash -->
 +        <build_simple module="xxhash"/>
@@ -627,31 +633,29 @@ index 000000000..ee5be205b
 +            </or>
 +        </condition>
 +
-+<!--
 +        <sequential unless:set="native-dependencies-uptodate">
 +            <parallel threadsPerProcessor="4" failonany="true">
 +
 +            <update-dependency module="assimp" artifact="libassimp.so"/>
 +            <update-dependency module="assimp" artifact="libdraco.so"/>
-+            <update-dependency module="bgfx" artifact="libbgfx.so"/>
-+            <update-dependency module="freetype" artifact="libfreetype.so"/>
++            <!-- <update-dependency module="bgfx" artifact="libbgfx.so"/> -->
++            <!-- <update-dependency module="freetype" artifact="libfreetype.so"/> -->
 +            <update-dependency module="glfw" artifact="libglfw.so"/>
-+            <update-dependency module="harfbuzz" artifact="libharfbuzz.so"/>
-+            <update-dependency module="hwloc" artifact="libhwloc.so"/>
-+            <update-dependency module="jemalloc" artifact="libjemalloc.so"/>
++            <!-- <update-dependency module="harfbuzz" artifact="libharfbuzz.so"/> -->
++            <!-- <update-dependency module="hwloc" artifact="libhwloc.so"/> -->
++            <!-- <update-dependency module="jemalloc" artifact="libjemalloc.so"/> -->
 +            <update-dependency module="ktx" artifact="libktx.so"/>
-+            <update-dependency module="openal" artifact="libopenal.so"/>
-+            <update-dependency module="openvr" artifact="libopenvr_api.so"/>
-+            <update-dependency module="openxr" artifact="libopenxr_loader.so"/>
-+            <update-dependency module="opus" artifact="libopus.so"/>
-+            <update-dependency module="shaderc" artifact="libshaderc.so"/>
-+            <update-dependency module="spvc" artifact="libspirv-cross.so"/>
++            <!-- <update-dependency module="openal" artifact="libopenal.so"/> -->
++            <!-- <update-dependency module="openvr" artifact="libopenvr_api.so"/> -->
++            <!-- <update-dependency module="openxr" artifact="libopenxr_loader.so"/> -->
++            <!-- <update-dependency module="opus" artifact="libopus.so"/> -->
++            <!-- <update-dependency module="shaderc" artifact="libshaderc.so"/> -->
++            <!-- <update-dependency module="spvc" artifact="libspirv-cross.so"/> -->
 +
 +            </parallel>
 +
 +            <touch file="${lib.native}/touch.txt" verbose="false"/>
 +        </sequential>
-+-->
 +    </target>
 +</project>
 diff --git config/freebsd/version.script config/freebsd/version.script
@@ -778,7 +782,7 @@ index b50229407..3aa5625c4 100644
 \ No newline at end of file
 +}
 diff --git modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
-index 1babac919..712f90e3c 100644
+index 1babac919..0d7792386 100644
 --- modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
 +++ modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
 @@ -25,6 +25,18 @@ public enum Platform {
@@ -812,15 +816,13 @@ index 1babac919..712f90e3c 100644
          } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
              current = MACOSX;
          } else {
-@@ -93,7 +107,16 @@ public enum Platform {
+@@ -93,7 +107,14 @@ public enum Platform {
  
          bundledLibraryNameMapper = getMapper(
              Configuration.BUNDLED_LIBRARY_NAME_MAPPER.get("default"),
 -            name -> name,
 +            name -> {
 +                switch (name) {
-+                    case "jemalloc":
-+                        return "c";
 +                    case "shaderc":
 +                        return "shaderc_shared";
 +                    default:
@@ -830,7 +832,7 @@ index 1babac919..712f90e3c 100644
              name -> Architecture.current.is64Bit ? name : name + "32"
          );
          bundledLibraryPathMapper = getMapper(
-@@ -169,4 +192,4 @@ public enum Platform {
+@@ -169,4 +190,4 @@ public enum Platform {
          }
      }
  
@@ -3634,10 +3636,10 @@ index 000000000..778937d5a
 +}
 \ No newline at end of file
 diff --git modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
-index 28d2dafc3..733d2060a 100644
+index 28d2dafc3..533dbef83 100644
 --- modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
 +++ modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
-@@ -6,12 +6,24 @@ package core.libffi.templates
+@@ -6,6 +6,7 @@ package core.libffi.templates
  
  import org.lwjgl.generator.*
  import core.libffi.*
@@ -3645,24 +3647,7 @@ index 28d2dafc3..733d2060a 100644
  
  fun LibFFI() = "LibFFI".nativeClass(Module.CORE_LIBFFI, prefix = "FFI_") {
      nativeDirective("""
- DISABLE_WARNINGS()
- #define FFI_BUILDING
- #include "ffi.h"
-+/* FIXME(Er2): many packages depends on libffi which doesn't provide these defines */
-+#ifdef __FreeBSD__
-+#define FFI_SYSV -1
-+#define FFI_STDCALL -1
-+#define FFI_THISCALL -1
-+#define FFI_FASTCALL -1
-+#define FFI_MS_CDECL -1
-+#define FFI_PASCAL -1
-+#define FFI_REGISTER -1
-+#define FFI_VFP -1
-+#endif
- ENABLE_WARNINGS()
- typedef void (*FFI_FN_TYPE)(void);
- typedef void (*FFI_CLOSURE_FUN)(ffi_cif*, void*, void**, void*);""")
-@@ -314,4 +326,4 @@ typedef void (*FFI_CLOSURE_FUN)(ffi_cif*, void*, void**, void*);""")
+@@ -314,4 +315,4 @@ typedef void (*FFI_CLOSURE_FUN)(ffi_cif*, void*, void**, void*);""")
  
          returnDoc = "#OK if everything went ok, and one of the other {@code ffi_status} values on error"
      )
@@ -3785,3 +3770,42 @@ index d88c9a33e..37fdbf1c9 100644
      parsl_position rvec;
      rvec.x = rvec.y = radius;
      float r2 = radius * radius;
+diff --git modules/lwjgl/tinyfd/src/main/c/tinyfiledialogs.c modules/lwjgl/tinyfd/src/main/c/tinyfiledialogs.c
+index 3dcef0139..771b7500e 100644
+--- modules/lwjgl/tinyfd/src/main/c/tinyfiledialogs.c
++++ modules/lwjgl/tinyfd/src/main/c/tinyfiledialogs.c
+@@ -44,7 +44,7 @@ misrepresented as being the original software.
+ */
+ 
+ 
+-#ifndef __sun
++#if !defined(__sun) && !defined(__FreeBSD__)
+ #ifndef _POSIX_C_SOURCE
+ #define _POSIX_C_SOURCE 2 /* to accept POSIX 2 in old ANSI C standards */
+ #endif
+diff --git modules/lwjgl/tootle/src/main/c/scalar.h modules/lwjgl/tootle/src/main/c/scalar.h
+index e8cba5519..dfd391dae 100644
+--- modules/lwjgl/tootle/src/main/c/scalar.h
++++ modules/lwjgl/tootle/src/main/c/scalar.h
+@@ -62,7 +62,7 @@ typedef unsigned long Ulong;
+ 
+ inline double Limit(const Uchar& c) { (void) c; return UCHAR_MAX; }
+ inline double Limit(const Ushort& c) { (void) c; return USHRT_MAX; }
+-inline double Limit(const Ulong& c) { (void) c; return ULONG_MAX; }
++inline double Limit(const Ulong& c) { (void) c; return (double) ULONG_MAX; }
+ inline double Limit(const float& c) { (void) c; return 1.0; }
+ inline double Limit(const double& c) { (void) c; return 1.0; }
+ 
+diff --git modules/lwjgl/vma/src/main/c/vk_mem_alloc.h modules/lwjgl/vma/src/main/c/vk_mem_alloc.h
+index 3cc5880d1..20bb3b3d1 100644
+--- modules/lwjgl/vma/src/main/c/vk_mem_alloc.h
++++ modules/lwjgl/vma/src/main/c/vk_mem_alloc.h
+@@ -2765,7 +2765,7 @@ static void* vma_aligned_alloc(size_t alignment, size_t size)
+ 
+     return memalign(alignment, size);
+ }
+-#elif defined(__APPLE__) || defined(__ANDROID__) || (defined(__linux__) && defined(__GLIBCXX__) && !defined(_GLIBCXX_HAVE_ALIGNED_ALLOC))
++#elif defined(__APPLE__) || defined(__ANDROID__) || defined(__FreeBSD__) || (defined(__linux__) && defined(__GLIBCXX__) && !defined(_GLIBCXX_HAVE_ALIGNED_ALLOC))
+ #include <cstdlib>
+ 
+ #if defined(__APPLE__)
