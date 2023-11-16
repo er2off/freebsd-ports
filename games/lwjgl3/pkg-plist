@@ -1,6 +1,10 @@
 lib/lwjgl3/libassimp.so
+lib/lwjgl3/libbgfx.so
 lib/lwjgl3/libdraco.so
+lib/lwjgl3/libfreetype.so
 lib/lwjgl3/libglfw.so
+lib/lwjgl3/libharfbuzz.so
+lib/lwjgl3/libhwloc.so
 lib/lwjgl3/libktx.so
 lib/lwjgl3/liblwjgl.so
 lib/lwjgl3/liblwjgl_libdivide.so
@@ -28,6 +32,11 @@ lib/lwjgl3/liblwjgl_vma.so
 lib/lwjgl3/liblwjgl_xxhash.so
 lib/lwjgl3/liblwjgl_yoga.so
 lib/lwjgl3/liblwjgl_zstd.so
+lib/lwjgl3/libopenal.so
+lib/lwjgl3/libopenxr_loader.so
+lib/lwjgl3/libopus.so
+lib/lwjgl3/libshaderc.so
+lib/lwjgl3/libspirv-cross.so
 %%JAVAJARDIR%%/lwjgl3/assimp_license.txt
 %%JAVAJARDIR%%/lwjgl3/bgfx_license.txt
 %%JAVAJARDIR%%/lwjgl3/blendish_license.txt
@@ -57,6 +66,7 @@ lib/lwjgl3/liblwjgl_zstd.so
 %%JAVAJARDIR%%/lwjgl3/lwjgl-assimp-sources.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-assimp.jar
 %%DOCS%%%%JAVAJARDIR%%/lwjgl3/lwjgl-bgfx-javadoc.jar
+%%JAVAJARDIR%%/lwjgl3/lwjgl-bgfx-natives-freebsd.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-bgfx-natives-linux-arm32.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-bgfx-natives-linux-arm64.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-bgfx-natives-linux.jar
@@ -256,6 +266,7 @@ lib/lwjgl3/liblwjgl_zstd.so
 %%JAVAJARDIR%%/lwjgl3/lwjgl-odbc-sources.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-odbc.jar
 %%DOCS%%%%JAVAJARDIR%%/lwjgl3/lwjgl-openal-javadoc.jar
+%%JAVAJARDIR%%/lwjgl3/lwjgl-openal-natives-freebsd.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openal-natives-linux-arm32.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openal-natives-linux-arm64.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openal-natives-linux.jar
@@ -299,6 +310,7 @@ lib/lwjgl3/liblwjgl_zstd.so
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openvr-sources.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openvr.jar
 %%DOCS%%%%JAVAJARDIR%%/lwjgl3/lwjgl-openxr-javadoc.jar
+%%JAVAJARDIR%%/lwjgl3/lwjgl-openxr-natives-freebsd.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openxr-natives-linux-arm32.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openxr-natives-linux-arm64.jar
 %%JAVAJARDIR%%/lwjgl3/lwjgl-openxr-natives-linux.jar

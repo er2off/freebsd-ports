@@ -18,52 +18,52 @@ index bf8f96ae6..7386619da 100644
 \ No newline at end of file
 +}
 diff --git build.xml build.xml
-index d0fad8224..2f6fe1af7 100644
+index d0fad8224..1792a4905 100644
 --- build.xml
 +++ build.xml
-@@ -226,6 +226,7 @@
-             <src path="${core.kotlin.path}/libc"/>
+@@ -227,6 +227,7 @@
              <src path="${core.kotlin.path}/libffi"/>
              <src path="${core.kotlin.path}/linux"/>
-+            <src path="${core.kotlin.path}/freebsd"/>
              <src path="${core.kotlin.path}/macos"/>
++            <src path="${core.kotlin.path}/freebsd"/>
              <src path="${core.kotlin.path}/templates"/>
              <src path="${core.kotlin.path}/windows"/>
-@@ -1037,6 +1038,7 @@
-     <target name="upload-native" description="Uploads native build artifacts to build.lwjgl.org" depends="compile-native,-check-AWS-credentials">
+ 
+@@ -1038,6 +1039,7 @@
          <local name="revision"/>
          <property name="revision" value="liblwjgl.so.git" if:set="platform.linux"/>
-+        <property name="revision" value="liblwjgl.so.git" if:set="platform.freebsd"/>
          <property name="revision" value="liblwjgl.dylib.git" if:set="platform.macos"/>
++        <property name="revision" value="liblwjgl.so.git" if:set="platform.freebsd"/>
          <property name="revision" value="lwjgl.dll.git" if:set="platform.windows"/>
  
-@@ -1176,6 +1178,7 @@
-         <element name="linux-content" optional="true"/>
-         <element name="linux-arm64-content" optional="true"/>
+         <exec executable="git" failonerror="true" output="${lib.native}/org/lwjgl/${revision}" taskname="Git revision">
+@@ -1178,6 +1180,7 @@
          <element name="linux-arm32-content" optional="true"/>
-+        <element name="freebsd-content" optional="true"/>
          <element name="macos-content" optional="true"/>
          <element name="macos-arm64-content" optional="true"/>
++        <element name="freebsd-content" optional="true"/>
          <element name="windows-content" optional="true"/>
-@@ -1206,6 +1209,9 @@
-                 <get-release platform="linux" arch="arm32" file="lib@{native-library}.so" if:set="auto-natives"/>
-                 <get-release platform="linux" arch="arm32" file="lib@{native-library}.so.git" if:set="git-revision"/>
+         <element name="windows-x86-content" optional="true"/>
+         <element name="windows-arm64-content" optional="true"/>
+@@ -1212,6 +1215,9 @@
+                 <get-release platform="macos" arch="arm64" file="lib@{native-library}.dylib" if:set="auto-natives"/>
+                 <get-release platform="macos" arch="arm64" file="lib@{native-library}.dylib.git" if:set="git-revision"/>
  
 +                <!-- <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so" if:set="auto-natives"/> -->
 +                <!-- <get-release platform="freebsd" arch="x64" file="lib@{native-library}.so.git" if:set="git-revision"/> -->
 +
-                 <get-release platform="macos" arch="x64" file="lib@{native-library}.dylib" if:set="auto-natives"/>
-                 <get-release platform="macos" arch="x64" file="lib@{native-library}.dylib.git" if:set="git-revision"/>
+                 <get-release platform="windows" arch="x64" file="@{native-library}.dll" if:set="auto-natives"/>
+                 <get-release platform="windows" arch="x64" file="@{native-library}.dll.git" if:set="git-revision"/>
  
-@@ -1273,6 +1279,9 @@
-                     <natives-jar name="@{name}" title="@{title}" platform="linux-arm32" path="linux/arm32" type="so">
-                         <linux-arm32-content/>
+@@ -1279,6 +1285,9 @@
+                     <natives-jar name="@{name}" title="@{title}" platform="macos-arm64" path="macos/arm64" type="dylib">
+                         <macos-arm64-content/>
                      </natives-jar>
 +                    <natives-jar name="@{name}" title="@{title}" platform="freebsd" path="freebsd/x64" type="so">
 +                        <freebsd-content/>
 +                    </natives-jar>
-                     <natives-jar name="@{name}" title="@{title}" platform="macos" path="macos/x64" type="dylib">
-                         <macos-content/>
+                     <natives-jar name="@{name}" title="@{title}" platform="windows" path="windows/x64" type="dll">
+                         <windows-content/>
                      </natives-jar>
 @@ -1301,6 +1310,7 @@
          <element name="linux" optional="true"/>
@@ -81,79 +81,128 @@ index d0fad8224..2f6fe1af7 100644
                  <macos-content><macos/></macos-content>
                  <macos-arm64-content><macos-arm64/></macos-arm64-content>
                  <windows-content><windows/></windows-content>
-@@ -1538,6 +1549,10 @@
-                 <get-release platform="linux" arch="arm32" file="libassimp.so.git"/>
-                 <get-release platform="linux" arch="arm32" file="libdraco.so"/>
+@@ -1546,6 +1557,10 @@
+                 <get-release platform="macos" arch="arm64" file="libassimp.dylib.git"/>
+                 <get-release platform="macos" arch="arm64" file="libdraco.dylib"/>
  
 +                <get-release platform="freebsd" arch="x64" file="libassimp.so"/>
 +                <get-release platform="freebsd" arch="x64" file="libassimp.so.git"/>
 +                <get-release platform="freebsd" arch="x64" file="libdraco.so"/>
 +
-                 <get-release platform="macos" arch="x64" file="libassimp.dylib"/>
-                 <get-release platform="macos" arch="x64" file="libassimp.dylib.git"/>
-                 <get-release platform="macos" arch="x64" file="libdraco.dylib"/>
-@@ -1610,6 +1625,9 @@
-                 <get-release platform="linux" arch="arm32" file="libglfw.so"/>
-                 <get-release platform="linux" arch="arm32" file="libglfw.so.git"/>
+                 <get-release platform="windows" arch="x64" file="assimp.dll"/>
+                 <get-release platform="windows" arch="x64" file="assimp.dll.git"/>
+                 <get-release platform="windows" arch="x64" file="draco.dll"/>
+@@ -1578,6 +1593,9 @@
+                 <get-release platform="macos" arch="arm64" file="libbgfx.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="libbgfx.dylib.git"/>
+ 
++                <get-release platform="freebsd" arch="x64" file="libbgfx.so"/>
++                <get-release platform="freebsd" arch="x64" file="libbgfx.so.git"/>
++
+                 <get-release platform="windows" arch="x64" file="bgfx.dll"/>
+                 <get-release platform="windows" arch="x64" file="bgfx.dll.git"/>
+ 
+@@ -1620,6 +1638,9 @@
+                 <get-release platform="macos" arch="arm64" file="libglfw_async.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="libglfw_async.dylib.git"/>
  
 +                <get-release platform="freebsd" arch="x64" file="libglfw.so"/>
 +                <get-release platform="freebsd" arch="x64" file="libglfw.so.git"/>
 +
-                 <get-release platform="macos" arch="x64" file="libglfw.dylib"/>
-                 <get-release platform="macos" arch="x64" file="libglfw.dylib.git"/>
-                 <get-release platform="macos" arch="x64" file="libglfw_async.dylib"/>
-@@ -1649,6 +1667,7 @@
-                 <get-release platform="linux" arch="x64" file="libktx.so"/>
-                 <get-release platform="linux" arch="arm64" file="libktx.so"/>
+                 <get-release platform="windows" arch="x64" file="glfw.dll"/>
+                 <get-release platform="windows" arch="x64" file="glfw.dll.git"/>
+ 
+@@ -1651,6 +1672,7 @@
                  <get-release platform="linux" arch="arm32" file="libktx.so"/>
-+                <get-release platform="freebsd" arch="x64" file="libktx.so"/>
                  <get-release platform="macos" arch="x64" file="libktx.dylib"/>
                  <get-release platform="macos" arch="arm64" file="libktx.dylib"/>
++                <get-release platform="freebsd" arch="x64" file="libktx.so"/>
                  <get-release platform="windows" arch="x64" file="ktx.dll"/>
-@@ -1714,6 +1733,9 @@
-                 <get-release platform="linux" arch="arm32" file="libopenal.so"/>
-                 <get-release platform="linux" arch="arm32" file="libopenal.so.git"/>
+                 <get-release platform="windows" arch="arm64" file="ktx.dll"/>
+             </natives>
+@@ -1675,6 +1697,7 @@
+                 <get-release platform="linux" arch="arm64" file="liblwjgl_meow.so"/>
+                 <get-release platform="macos" arch="x64" file="liblwjgl_meow.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="liblwjgl_meow.dylib"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_meow.so"/> -->
+                 <get-release platform="windows" arch="x64" file="lwjgl_meow.dll"/>
+                 <get-release platform="windows" arch="x86" file="lwjgl_meow.dll"/>
+                 <get-release platform="windows" arch="arm64" file="lwjgl_meow.dll"/>
+@@ -1693,6 +1716,7 @@
+                 <get-release platform="linux" arch="x64" file="liblwjgl_nfd_portal.so"/>
+                 <get-release platform="linux" arch="arm64" file="liblwjgl_nfd_portal.so"/>
+                 <get-release platform="linux" arch="arm32" file="liblwjgl_nfd_portal.so"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_nfd_portal.so"/> -->
+             </natives>
+         </release-module>
  
-+                <!-- <get-release platform="freebsd" arch="x64" file="libopenal.so"/> -->
-+                <!-- <get-release platform="freebsd" arch="x64" file="libopenal.so.git"/> -->
+@@ -1720,6 +1744,9 @@
+                 <get-release platform="macos" arch="arm64" file="libopenal.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="libopenal.dylib.git"/>
+ 
++                <get-release platform="freebsd" arch="x64" file="libopenal.so"/>
++                <get-release platform="freebsd" arch="x64" file="libopenal.so.git"/>
 +
-                 <get-release platform="macos" arch="x64" file="libopenal.dylib"/>
-                 <get-release platform="macos" arch="x64" file="libopenal.dylib.git"/>
+                 <get-release platform="windows" arch="x64" file="OpenAL.dll"/>
+                 <get-release platform="windows" arch="x64" file="OpenAL.dll.git"/>
  
-@@ -1747,6 +1769,10 @@
-                 <get-release platform="linux" arch="x64" file="libopenvr_api.so"/>
-                 <get-release platform="linux" arch="x64" file="libopenvr_api.so.git"/>
+@@ -1751,6 +1778,10 @@
+                 <get-release platform="macos" arch="x64" file="libopenvr_api.dylib"/>
+                 <get-release platform="macos" arch="x64" file="libopenvr_api.dylib.git"/>
  
 +                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_openvr.so"/> -->
 +                <!-- <get-release platform="freebsd" arch="x64" file="libopenvr_api.so"/> -->
 +                <!-- <get-release platform="freebsd" arch="x64" file="libopenvr_api.so.git"/> -->
 +
-                 <get-release platform="macos" arch="x64" file="liblwjgl_openvr.dylib"/>
-                 <get-release platform="macos" arch="x64" file="libopenvr_api.dylib"/>
-                 <get-release platform="macos" arch="x64" file="libopenvr_api.dylib.git"/>
-@@ -1826,6 +1852,7 @@
-         <release-module name="sse" title="SSE" if:true="${binding.sse}">
+                 <get-release platform="windows" arch="x64" file="lwjgl_openvr.dll"/>
+                 <get-release platform="windows" arch="x64" file="openvr_api.dll"/>
+                 <get-release platform="windows" arch="x64" file="openvr_api.dll.git"/>
+@@ -1773,6 +1804,9 @@
+                 <get-release platform="linux" arch="arm32" file="libopenxr_loader.so"/>
+                 <get-release platform="linux" arch="arm32" file="libopenxr_loader.so.git"/>
+ 
++                <get-release platform="freebsd" arch="x64" file="libopenxr_loader.so"/>
++                <get-release platform="freebsd" arch="x64" file="libopenxr_loader.so.git"/>
++
+                 <get-release platform="windows" arch="x64" file="openxr-loader.dll"/>
+                 <get-release platform="windows" arch="x64" file="openxr-loader.dll.git"/>
+ 
+@@ -1808,6 +1842,8 @@
+                 <get-release platform="macos" arch="x64" file="liblwjgl_remotery.dylib"/>
+                 <get-release platform="macos" arch="arm64" file="liblwjgl_remotery.dylib"/>
+ 
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_remotery.so"/> -->
++
+                 <get-release platform="windows" arch="x64" file="lwjgl_remotery.dll"/>
+                 <get-release platform="windows" arch="x86" file="lwjgl_remotery.dll"/>
+             </natives>
+@@ -1827,6 +1863,7 @@
              <natives>
                  <get-release platform="linux" arch="x64" file="liblwjgl_sse.so"/>
-+                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_sse.so"/> -->
                  <get-release platform="macos" arch="x64" file="liblwjgl_sse.dylib"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_sse.so"/> -->
                  <get-release platform="windows" arch="x64" file="lwjgl_sse.dll"/>
                  <get-release platform="windows" arch="x86" file="lwjgl_sse.dll"/>
+             </natives>
+@@ -1846,6 +1883,7 @@
+             <natives>
+                 <get-release platform="linux" arch="x64" file="liblwjgl_tootle.so"/>
+                 <get-release platform="macos" arch="x64" file="liblwjgl_tootle.dylib"/>
++                <!-- <get-release platform="freebsd" arch="x64" file="liblwjgl_tootle.so"/> -->
+                 <get-release platform="windows" arch="x64" file="lwjgl_tootle.dll"/>
+                 <get-release platform="windows" arch="x86" file="lwjgl_tootle.dll"/>
+             </natives>
 diff --git config/build-definitions.xml config/build-definitions.xml
-index 6fc879679..b72cfd207 100644
+index 6fc879679..26bfbc888 100644
 --- config/build-definitions.xml
 +++ config/build-definitions.xml
-@@ -114,14 +114,18 @@ This script is included in /build.xml and /config/update-dependencies.xml.
-     <condition property="platform.linux">
-         <os name="Linux"/>
+@@ -117,11 +117,15 @@ This script is included in /build.xml and /config/update-dependencies.xml.
+     <condition property="platform.macos">
+         <os name="Mac OS X"/>
      </condition>
 +    <condition property="platform.freebsd">
 +        <os name="FreeBSD"/>
 +    </condition>
-     <condition property="platform.macos">
--        <os name="Mac OS X"/>
-+        <os name="macOS"/>
-     </condition>
      <condition property="platform.windows">
          <os family="Windows"/>
      </condition>
@@ -173,7 +222,7 @@ index 6fc879679..b72cfd207 100644
  
 diff --git config/freebsd/build.xml config/freebsd/build.xml
 new file mode 100644
-index 000000000..1fd107efe
+index 000000000..dd7c616c7
 --- /dev/null
 +++ config/freebsd/build.xml
 @@ -0,0 +1,481 @@
@@ -638,19 +687,19 @@ index 000000000..1fd107efe
 +
 +            <update-dependency module="assimp" artifact="libassimp.so"/>
 +            <update-dependency module="assimp" artifact="libdraco.so"/>
-+            <!-- <update-dependency module="bgfx" artifact="libbgfx.so"/> -->
-+            <!-- <update-dependency module="freetype" artifact="libfreetype.so"/> -->
++            <update-dependency module="bgfx" artifact="libbgfx.so"/>
++            <update-dependency module="freetype" artifact="libfreetype.so"/>
 +            <update-dependency module="glfw" artifact="libglfw.so"/>
-+            <!-- <update-dependency module="harfbuzz" artifact="libharfbuzz.so"/> -->
-+            <!-- <update-dependency module="hwloc" artifact="libhwloc.so"/> -->
-+            <!-- <update-dependency module="jemalloc" artifact="libjemalloc.so"/> -->
++            <update-dependency module="harfbuzz" artifact="libharfbuzz.so"/>
++            <update-dependency module="hwloc" artifact="libhwloc.so"/>
++            <update-dependency module="jemalloc" artifact="libjemalloc.so"/>
 +            <update-dependency module="ktx" artifact="libktx.so"/>
-+            <!-- <update-dependency module="openal" artifact="libopenal.so"/> -->
++            <update-dependency module="openal" artifact="libopenal.so"/>
 +            <!-- <update-dependency module="openvr" artifact="libopenvr_api.so"/> -->
-+            <!-- <update-dependency module="openxr" artifact="libopenxr_loader.so"/> -->
-+            <!-- <update-dependency module="opus" artifact="libopus.so"/> -->
-+            <!-- <update-dependency module="shaderc" artifact="libshaderc.so"/> -->
-+            <!-- <update-dependency module="spvc" artifact="libspirv-cross.so"/> -->
++            <update-dependency module="openxr" artifact="libopenxr_loader.so"/>
++            <update-dependency module="opus" artifact="libopus.so"/>
++            <update-dependency module="shaderc" artifact="libshaderc.so"/>
++            <update-dependency module="spvc" artifact="libspirv-cross.so"/>
 +
 +            </parallel>
 +
@@ -782,7 +831,7 @@ index b50229407..3aa5625c4 100644
 \ No newline at end of file
 +}
 diff --git modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
-index 1babac919..0d7792386 100644
+index 1babac919..1df56fe56 100644
 --- modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
 +++ modules/lwjgl/core/src/main/java/org/lwjgl/system/Platform.java
 @@ -25,6 +25,18 @@ public enum Platform {
@@ -804,35 +853,21 @@ index 1babac919..0d7792386 100644
      // TODO: Rename to MACOS in LWJGL 4
      MACOSX("macOS", "macos") {
          private final Pattern DYLIB = Pattern.compile("(?:^|/)lib\\w+(?:[.]\\d+)*[.]dylib$");
-@@ -83,8 +95,10 @@ public enum Platform {
+@@ -83,10 +95,12 @@ public enum Platform {
          String osName = System.getProperty("os.name");
          if (osName.startsWith("Windows")) {
              current = WINDOWS;
 -        } else if (osName.startsWith("Linux") || osName.startsWith("FreeBSD") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
 +        } else if (osName.startsWith("Linux") || osName.startsWith("SunOS") || osName.startsWith("Unix")) {
              current = LINUX;
-+        } else if (osName.startsWith("FreeBSD")) {
-+            current = FREEBSD;
          } else if (osName.startsWith("Mac OS X") || osName.startsWith("Darwin")) {
              current = MACOSX;
++        } else if (osName.startsWith("FreeBSD")) {
++            current = FREEBSD;
          } else {
-@@ -93,7 +107,14 @@ public enum Platform {
- 
-         bundledLibraryNameMapper = getMapper(
-             Configuration.BUNDLED_LIBRARY_NAME_MAPPER.get("default"),
--            name -> name,
-+            name -> {
-+                switch (name) {
-+                    case "shaderc":
-+                        return "shaderc_shared";
-+                    default:
-+                        return name;
-+                }
-+            },
-             name -> Architecture.current.is64Bit ? name : name + "32"
-         );
-         bundledLibraryPathMapper = getMapper(
-@@ -169,4 +190,4 @@ public enum Platform {
+             throw new LinkageError("Unknown platform: " + osName);
+         }
+@@ -169,4 +183,4 @@ public enum Platform {
          }
      }
  
@@ -3635,58 +3670,27 @@ index 000000000..778937d5a
 +    )
 +}
 \ No newline at end of file
-diff --git modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
-index 28d2dafc3..533dbef83 100644
---- modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
-+++ modules/lwjgl/core/src/templates/kotlin/core/libffi/templates/LibFFI.kt
-@@ -6,6 +6,7 @@ package core.libffi.templates
- 
- import org.lwjgl.generator.*
- import core.libffi.*
-+import java.lang.System
- 
- fun LibFFI() = "LibFFI".nativeClass(Module.CORE_LIBFFI, prefix = "FFI_") {
-     nativeDirective("""
-@@ -314,4 +315,4 @@ typedef void (*FFI_CLOSURE_FUN)(ffi_cif*, void*, void**, void*);""")
- 
-         returnDoc = "#OK if everything went ok, and one of the other {@code ffi_status} values on error"
-     )
--}
-\ No newline at end of file
-+}
 diff --git modules/lwjgl/openal/src/main/java/org/lwjgl/openal/ALC.java modules/lwjgl/openal/src/main/java/org/lwjgl/openal/ALC.java
-index 0a6cfef31..7c23086f5 100644
+index 0a6cfef31..384b66179 100644
 --- modules/lwjgl/openal/src/main/java/org/lwjgl/openal/ALC.java
 +++ modules/lwjgl/openal/src/main/java/org/lwjgl/openal/ALC.java
-@@ -60,20 +60,7 @@ public final class ALC {
- 
-     /** Loads the OpenAL native library, using the default library name. */
+@@ -62,15 +62,11 @@ public final class ALC {
      public static void create() {
--        String libName;
--        switch (Platform.get()) {
+         String libName;
+         switch (Platform.get()) {
 -            case LINUX:
 -            case MACOSX:
 -                libName = "openal";
 -                break;
--            case WINDOWS:
--                libName = "OpenAL";
--                break;
--            default:
+             case WINDOWS:
+                 libName = "OpenAL";
+                 break;
+             default:
 -                throw new IllegalStateException();
--        }
--
--        create(Configuration.OPENAL_LIBRARY_NAME.get(Platform.mapLibraryNameBundled(libName)));
-+        create(Configuration.OPENAL_LIBRARY_NAME.get(Platform.mapLibraryNameBundled("openal")));
-     }
++                libName = "openal";
+         }
  
-     private static class SharedLibraryAL extends SharedLibrary.Delegate implements FunctionProviderLocal {
-@@ -350,4 +337,4 @@ public final class ALC {
- 
-     }
- 
--}
-\ No newline at end of file
-+}
+         create(Configuration.OPENAL_LIBRARY_NAME.get(Platform.mapLibraryNameBundled(libName)));
 diff --git modules/lwjgl/opencl/src/main/java/org/lwjgl/opencl/CL.java modules/lwjgl/opencl/src/main/java/org/lwjgl/opencl/CL.java
 index 9b6af615b..767c55c3d 100644
 --- modules/lwjgl/opencl/src/main/java/org/lwjgl/opencl/CL.java

@@ -34,6 +34,8 @@ LIB_DEPENDS=	libopenal.so:audio/openal-soft \
 OPTIONS_DEFINE=		DOCS
 OPTIONS_DEFAULT=	DOCS
 OPTIONS_SUB=		yes
+# FIXME: Add automatic %%DOCS%% prefix
+#PLIST_SUB=		DOCS_regex=^.\*-javadoc.jar$
 
 MAKE_ENV+=	JAVA8_HOME=${LOCALBASE}/openjdk8
 MAKE_ARGS+=	-Dkotlinc=${LOCALBASE}/share/kotlin
@@ -50,8 +52,9 @@ do-install:
 .for x in ${WRKSRC}/bin/RELEASE/lwjgl*/*.jar
 	${INSTALL_DATA} ${WRKSRC}${x} ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}/
 .endfor
+# FIXME: Use native FreeBSD ports license installation?
 .for x in ${WRKSRC}/bin/RELEASE/lwjgl*/*license.txt
-	${INSTALL_DATA} ${WRKSRC}${x} ${STAGEDIR}${JAVAJARDIR}/${PORTNAME}/
+	${INSTALL_DATA} ${WRKSRC}${x} ${STAGEDIR}${SHAREDIR}/licenses/${PORTNAME}/
 .endfor
 .for x in ${LIBSDIR}/liblwjgl.so ${LIBSDIR}/*/*.so
 	${INSTALL_LIB} ${WRKSRC}${x} ${STAGEDIR}${PREFIX}/lib/${PORTNAME}/
