@@ -26,7 +26,6 @@ USE_XORG=	x11
 
 # We need 2 javas, yes
 BUILD_DEPENDS=	${LOCALBASE}/openjdk8/bin/java:java/openjdk8
-BUILD_DEPENDS+=	${LOCALBASE}/bin/kotlinc:lang/kotlin
 LIB_DEPENDS=	libopenal.so:audio/openal-soft \
 		libopus.so:audio/opus \
 		libOpenCL.so:devel/ocl-icd
@@ -38,7 +37,6 @@ OPTIONS_SUB=		yes
 #PLIST_SUB=		DOCS_regex=^.\*-javadoc.jar$
 
 MAKE_ENV+=	JAVA8_HOME=${LOCALBASE}/openjdk8
-MAKE_ARGS+=	-Dkotlinc=${LOCALBASE}/share/kotlin
 
 DOCS_MAKE_ARGS_OFF=	-Djavadoc.skip=yes
 
