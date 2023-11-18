@@ -60,8 +60,5 @@ post-install-DOCS-on:
 	${INSTALL_DATA} ${WRKSRC}/${f} ${STAGEDIR}${DOCSDIR}
 .endfor
 	${INSTALL_MAN} ${WRKSRC}/platform/unix/love.6 ${STAGEDIR}${PREFIX}/man/man6/
-#install(FILES
-#	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.6
-#	DESTINATION man/man6)
 
 .include <bsd.port.mk>

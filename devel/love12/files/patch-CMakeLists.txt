@@ -38,9 +38,9 @@
 +	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.desktop.in
 +	${CMAKE_CURRENT_BINARY_DIR}/platform/unix/love.desktop
 +)
-+install(FILES
-+	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.6
-+	DESTINATION man/man6)
++#install(FILES
++#	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.6
++#	DESTINATION man/man6)
 +install(FILES
 +	${CMAKE_CURRENT_BINARY_DIR}/platform/unix/love.desktop
 +	DESTINATION share/applications)
