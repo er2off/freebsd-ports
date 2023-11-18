@@ -22,6 +22,8 @@ USE_JAVA=	8+
 USE_QT=		core concurrent gui network testlib:build widgets xml \
 		buildtools:build qmake:build
 
+CONFLICTS_BUILD=	openjdk19
+
 CMAKE_ARGS=	-DMultiMC_LAYOUT="lin-system"
 CMAKE_OFF=	MultiMC_UPDATER
 CXXFLAGS+=	-Wno-inconsistent-missing-override \
