@@ -1,0 +1,9 @@
+bin/love12
+lib/libliblove12.so
+man/man6/love.6.gz
+share/applications/love12.desktop
+%%PORTDOCS%%%%DOCSDIR%%/changes.txt
+%%PORTDOCS%%%%DOCSDIR%%/readme.md
+share/icons/hicolor/scalable/mimetypes/application-x-love12-game.svg
+share/mime/packages/love12.xml
+share/pixmaps/love12.svg
