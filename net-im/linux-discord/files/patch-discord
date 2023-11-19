@@ -1,0 +1,12 @@
+--- discord.orig	2023-11-19 07:07:00 UTC
++++ discord
+@@ -0,0 +1,9 @@
++#!/compat/linux/bin/bash
++# Run Discord client
++# Script was modified from linux-browser-installer
++
++export CHROME_WRAPPER="`readlink -f "$0"`"
++export LD_LIBRARY_PATH=/usr/local/steam-utils/lib64/fakeudev
++export LD_PRELOAD=/usr/local/steam-utils/lib64/webfix/webfix.so
++
++exec -a "$0" "/usr/share/discord/Discord" --no-sandbox --no-zygote --test-type --v=0 "$@"
