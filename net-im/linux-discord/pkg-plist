@@ -1,94 +1,95 @@
-/compat/linux/bin/discord
-/compat/linux/%%DATADIR%%/Discord
-/compat/linux/%%DATADIR%%/chrome-sandbox
-/compat/linux/%%DATADIR%%/chrome_100_percent.pak
-/compat/linux/%%DATADIR%%/chrome_200_percent.pak
-/compat/linux/%%DATADIR%%/chrome_crashpad_handler
-/compat/linux/%%DATADIR%%/discord.desktop
-/compat/linux/%%DATADIR%%/discord.desktop.bak
-/compat/linux/%%DATADIR%%/discord.png
-/compat/linux/%%DATADIR%%/icudtl.dat
-/compat/linux/%%DATADIR%%/libEGL.so
-/compat/linux/%%DATADIR%%/libGLESv2.so
-/compat/linux/%%DATADIR%%/libffmpeg.so
-/compat/linux/%%DATADIR%%/libvk_swiftshader.so
-/compat/linux/%%DATADIR%%/libvulkan.so.1
-/compat/linux/%%DATADIR%%/locales/af.pak
-/compat/linux/%%DATADIR%%/locales/am.pak
-/compat/linux/%%DATADIR%%/locales/ar.pak
-/compat/linux/%%DATADIR%%/locales/bg.pak
-/compat/linux/%%DATADIR%%/locales/bn.pak
-/compat/linux/%%DATADIR%%/locales/ca.pak
-/compat/linux/%%DATADIR%%/locales/cs.pak
-/compat/linux/%%DATADIR%%/locales/da.pak
-/compat/linux/%%DATADIR%%/locales/de.pak
-/compat/linux/%%DATADIR%%/locales/el.pak
-/compat/linux/%%DATADIR%%/locales/en-GB.pak
-/compat/linux/%%DATADIR%%/locales/en-US.pak
-/compat/linux/%%DATADIR%%/locales/es-419.pak
-/compat/linux/%%DATADIR%%/locales/es.pak
-/compat/linux/%%DATADIR%%/locales/et.pak
-/compat/linux/%%DATADIR%%/locales/fa.pak
-/compat/linux/%%DATADIR%%/locales/fi.pak
-/compat/linux/%%DATADIR%%/locales/fil.pak
-/compat/linux/%%DATADIR%%/locales/fr.pak
-/compat/linux/%%DATADIR%%/locales/gu.pak
-/compat/linux/%%DATADIR%%/locales/he.pak
-/compat/linux/%%DATADIR%%/locales/hi.pak
-/compat/linux/%%DATADIR%%/locales/hr.pak
-/compat/linux/%%DATADIR%%/locales/hu.pak
-/compat/linux/%%DATADIR%%/locales/id.pak
-/compat/linux/%%DATADIR%%/locales/it.pak
-/compat/linux/%%DATADIR%%/locales/ja.pak
-/compat/linux/%%DATADIR%%/locales/kn.pak
-/compat/linux/%%DATADIR%%/locales/ko.pak
-/compat/linux/%%DATADIR%%/locales/lt.pak
-/compat/linux/%%DATADIR%%/locales/lv.pak
-/compat/linux/%%DATADIR%%/locales/ml.pak
-/compat/linux/%%DATADIR%%/locales/mr.pak
-/compat/linux/%%DATADIR%%/locales/ms.pak
-/compat/linux/%%DATADIR%%/locales/nb.pak
-/compat/linux/%%DATADIR%%/locales/nl.pak
-/compat/linux/%%DATADIR%%/locales/pl.pak
-/compat/linux/%%DATADIR%%/locales/pt-BR.pak
-/compat/linux/%%DATADIR%%/locales/pt-PT.pak
-/compat/linux/%%DATADIR%%/locales/ro.pak
-/compat/linux/%%DATADIR%%/locales/ru.pak
-/compat/linux/%%DATADIR%%/locales/sk.pak
-/compat/linux/%%DATADIR%%/locales/sl.pak
-/compat/linux/%%DATADIR%%/locales/sr.pak
-/compat/linux/%%DATADIR%%/locales/sv.pak
-/compat/linux/%%DATADIR%%/locales/sw.pak
-/compat/linux/%%DATADIR%%/locales/ta.pak
-/compat/linux/%%DATADIR%%/locales/te.pak
-/compat/linux/%%DATADIR%%/locales/th.pak
-/compat/linux/%%DATADIR%%/locales/tr.pak
-/compat/linux/%%DATADIR%%/locales/uk.pak
-/compat/linux/%%DATADIR%%/locales/ur.pak
-/compat/linux/%%DATADIR%%/locales/vi.pak
-/compat/linux/%%DATADIR%%/locales/zh-CN.pak
-/compat/linux/%%DATADIR%%/locales/zh-TW.pak
-/compat/linux/%%DATADIR%%/postinst.sh
-/compat/linux/%%DATADIR%%/resources.pak
-/compat/linux/%%DATADIR%%/resources/app.asar
-/compat/linux/%%DATADIR%%/resources/bootstrap/manifest.json
-/compat/linux/%%DATADIR%%/resources/build_info.json
-/compat/linux/%%DATADIR%%/resources/tzdata/metaZones.res
-/compat/linux/%%DATADIR%%/resources/tzdata/timezoneTypes.res
-/compat/linux/%%DATADIR%%/resources/tzdata/windowsZones.res
-/compat/linux/%%DATADIR%%/resources/tzdata/zoneinfo64.res
-/compat/linux/%%DATADIR%%/snapshot_blob.bin
-/compat/linux/%%DATADIR%%/v8_context_snapshot.bin
-/compat/linux/%%DATADIR%%/vk_swiftshader_icd.json
+/compat/ubuntu/bin/discord
+/compat/ubuntu/usr/%%DATADIR%%/Discord
+/compat/ubuntu/usr/%%DATADIR%%/chrome-sandbox
+/compat/ubuntu/usr/%%DATADIR%%/chrome_100_percent.pak
+/compat/ubuntu/usr/%%DATADIR%%/chrome_200_percent.pak
+/compat/ubuntu/usr/%%DATADIR%%/chrome_crashpad_handler
+/compat/ubuntu/usr/%%DATADIR%%/discord.desktop
+/compat/ubuntu/usr/%%DATADIR%%/discord.desktop.bak
+/compat/ubuntu/usr/%%DATADIR%%/discord.png
+/compat/ubuntu/usr/%%DATADIR%%/icudtl.dat
+/compat/ubuntu/usr/%%DATADIR%%/libEGL.so
+/compat/ubuntu/usr/%%DATADIR%%/libGLESv2.so
+/compat/ubuntu/usr/%%DATADIR%%/libffmpeg.so
+/compat/ubuntu/usr/%%DATADIR%%/libvk_swiftshader.so
+/compat/ubuntu/usr/%%DATADIR%%/libvulkan.so.1
+/compat/ubuntu/usr/%%DATADIR%%/locales/af.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/am.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ar.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/bg.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/bn.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ca.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/cs.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/da.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/de.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/el.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/en-GB.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/en-US.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/es-419.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/es.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/et.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/fa.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/fi.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/fil.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/fr.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/gu.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/he.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/hi.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/hr.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/hu.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/id.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/it.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ja.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/kn.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ko.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/lt.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/lv.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ml.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/mr.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ms.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/nb.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/nl.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/pl.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/pt-BR.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/pt-PT.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ro.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ru.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/sk.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/sl.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/sr.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/sv.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/sw.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ta.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/te.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/th.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/tr.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/uk.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/ur.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/vi.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/zh-CN.pak
+/compat/ubuntu/usr/%%DATADIR%%/locales/zh-TW.pak
+/compat/ubuntu/usr/%%DATADIR%%/postinst.sh
+/compat/ubuntu/usr/%%DATADIR%%/resources.pak
+/compat/ubuntu/usr/%%DATADIR%%/resources/app.asar
+/compat/ubuntu/usr/%%DATADIR%%/resources/bootstrap/manifest.json
+/compat/ubuntu/usr/%%DATADIR%%/resources/build_info.json
+/compat/ubuntu/usr/%%DATADIR%%/resources/tzdata/metaZones.res
+/compat/ubuntu/usr/%%DATADIR%%/resources/tzdata/timezoneTypes.res
+/compat/ubuntu/usr/%%DATADIR%%/resources/tzdata/windowsZones.res
+/compat/ubuntu/usr/%%DATADIR%%/resources/tzdata/zoneinfo64.res
+/compat/ubuntu/usr/%%DATADIR%%/snapshot_blob.bin
+/compat/ubuntu/usr/%%DATADIR%%/v8_context_snapshot.bin
+/compat/ubuntu/usr/%%DATADIR%%/vk_swiftshader_icd.json
 bin/linux-discord
 share/applications/discord.desktop
 share/pixmaps/discord.png
-@dir /compat/linux/bin
-@dir /compat/linux/%%DATADIR%%/locales
-@dir /compat/linux/%%DATADIR%%/resources/bootstrap
-@dir /compat/linux/%%DATADIR%%/resources/tzdata
-@dir /compat/linux/%%DATADIR%%/resources
-@dir /compat/linux/%%DATADIR%%
-@dir /compat/linux/share
-@dir /compat/linux
+@dir /compat/ubuntu/bin
+@dir /compat/ubuntu/usr/%%DATADIR%%/locales
+@dir /compat/ubuntu/usr/%%DATADIR%%/resources/bootstrap
+@dir /compat/ubuntu/usr/%%DATADIR%%/resources/tzdata
+@dir /compat/ubuntu/usr/%%DATADIR%%/resources
+@dir /compat/ubuntu/usr/%%DATADIR%%
+@dir /compat/ubuntu/usr/share
+@dir /compat/ubuntu/usr
+@dir /compat/ubuntu
 @dir /compat

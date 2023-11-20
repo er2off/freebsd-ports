@@ -1,11 +1,11 @@
---- linux-discord.orig	2023-11-19 07:07:00 UTC
+--- linux-discord.orig	2023-11-20 16:21:25 UTC
 +++ linux-discord
 @@ -0,0 +1,26 @@
 +#!/bin/sh
 +# Run Discord through linuxulator
 +# Modified from linux-browser-installer
 +
-+chroot_path=/compat/linux
++chroot_path=/compat/ubuntu
 +
 +get_pa_sock_path()
 +{

@@ -11,7 +11,7 @@ WWW=		https://discord.com
 
 ONLY_FOR_ARCHS=	amd64
 
-RUN_DEPENDS=	${LOCALBASE}/steam-utils/lib64/fakeudev:games/linux-steam-utils \
+RUN_DEPENDS=	${LOCALBASE}/steam-utils/lib64/fakeudev/libudev.so.0:games/linux-steam-utils \
 		${LOCALBASE}/steam-utils/lib64/webfix/webfix.so:games/linux-steam-utils
 
 USES=		desktop-file-utils linux shared-mime-info
@@ -22,6 +22,7 @@ LICENSE_PERMS=	dist-mirror pkg-mirror auto-accept
 NO_BUILD=	YES
 PATCH_WRKSRC=	${WRKDIR}
 WRKSRC=		${WRKDIR}/Discord
+LINUXBASE=	/compat/ubuntu
 #USE_LINUX_PREFIX=	YES
 
 post-patch:
@@ -32,12 +33,12 @@ post-patch:
 do-install:
 	${INSTALL_SCRIPT} ${WRKDIR}/linux-discord ${STAGEDIR}${PREFIX}/bin/
 	@${MKDIR} ${STAGEDIR}${LINUXBASE}/bin
-	@${MKDIR} ${STAGEDIR}${LINUXBASE}/share/discord
+	@${MKDIR} ${STAGEDIR}${LINUXBASE}/usr/share/discord
 	@${CP} ${WRKSRC}/discord.desktop \
 		${STAGEDIR}${PREFIX}/share/applications/
 	@${CP} ${WRKSRC}/discord.png \
 		${STAGEDIR}${PREFIX}/share/pixmaps/
 	${INSTALL_SCRIPT} ${WRKDIR}/discord ${STAGEDIR}${LINUXBASE}/bin/
-	@${CP} -r ${WRKDIR}/Discord/* ${STAGEDIR}${LINUXBASE}/share/discord
+	@${CP} -r ${WRKDIR}/Discord/* ${STAGEDIR}${LINUXBASE}/usr/share/discord
 
 .include <bsd.port.mk>
