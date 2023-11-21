@@ -9,7 +9,7 @@ WWW=		https://prismlauncher.org
 LICENSE=	GPLv3
 LICENSE_FILE=	${WRKSRC}/COPYING.md
 
-RUN_DEPENDS=	lwjgl>=2.9.3:games/lwjgl\
+RUN_DEPENDS=	lwjgl>=2.9.3:games/lwjgl \
 		lwjgl3>=3.0:games/lwjgl3
 
 USES=		cmake compiler:c++17-lang qt:5 kde:5
@@ -25,5 +25,8 @@ GH_TUPLE=	commonmark:cmark:5ba25ff:cmark/libraries/cmark \
 USE_LDCONFIG=	yes
 USE_JAVA=	8+
 USE_QT=		core concurrent gui network testlib:build widgets xml
+
+post-install:
+	@${INSTALL_SCRIPT} ${.CURDIR}/minecraft-runtime ${STAGEDIR}${PREFIX}/bin/minecraft-runtime
 
 .include <bsd.port.mk>

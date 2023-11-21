@@ -1,0 +1,9 @@
+[
+{ type: install
+  message: <<EOM
+From version 1.13, Minecraft requires LWJGL 3 to run, but Java classpath tries Linux
+definitions so it doesn't work until Mojang update LWJGL to currently not released version.
+In order to run Minecraft 1.13 up to 1.20.2, you need to choose minecraft-runtime as Java executable.
+EOM
+}
+]

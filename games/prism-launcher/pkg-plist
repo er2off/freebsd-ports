@@ -1,3 +1,4 @@
+bin/minecraft-runtime
 bin/prismlauncher
 share/PrismLauncher/JavaCheck.jar
 share/PrismLauncher/NewLaunch.jar
