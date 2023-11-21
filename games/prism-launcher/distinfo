@@ -1,0 +1,15 @@
+TIMESTAMP = 1700580388
+SHA256 (PrismLauncher-PrismLauncher-8.0_GH0.tar.gz) = 647f91fc74404f543e2aacd232543bd230451025c4b5a517df28eccd83924067
+SIZE (PrismLauncher-PrismLauncher-8.0_GH0.tar.gz) = 4388058
+SHA256 (commonmark-cmark-5ba25ff_GH0.tar.gz) = 9050bd2285fe2c9fdd7535e6e36d3aedd634e8c3fdfe934036a23dc89040e25f
+SIZE (commonmark-cmark-5ba25ff_GH0.tar.gz) = 246931
+SHA256 (KDE-extra-cmake-modules-bbcbaff_GH0.tar.gz) = 970f53b7c0b4ef0b4c5dabc501ffdb89163a8614a1014bae26eef3a849398698
+SIZE (KDE-extra-cmake-modules-bbcbaff_GH0.tar.gz) = 394449
+SHA256 (gulrak-filesystem-8a2edd6_GH0.tar.gz) = d374a61276fa9c218df6da2a4d8b8866baecb81d4609875c48b5cd4c2dd6df3e
+SIZE (gulrak-filesystem-8a2edd6_GH0.tar.gz) = 211142
+SHA256 (PrismLauncher-libnbtplusplus-a5e8fd5_GH0.tar.gz) = b0edfbd8f99603fc9d91c3764b75e70f79fa0034c9f064f012a19134ea56167e
+SIZE (PrismLauncher-libnbtplusplus-a5e8fd5_GH0.tar.gz) = 48518
+SHA256 (stachenov-quazip-6117161_GH0.tar.gz) = 8ccdfbd7c1699229fe7a0e12e5e3c04561317b1d1db7a8453862e2e23d215e12
+SIZE (stachenov-quazip-6117161_GH0.tar.gz) = 156173
+SHA256 (marzer-tomlplusplus-7eb2ffc_GH0.tar.gz) = 70bfb0dbc095dbf3ee2b0345a0cf8bc1e205511eab47f9e65dbc3b89ea92934e
+SIZE (marzer-tomlplusplus-7eb2ffc_GH0.tar.gz) = 1289274
