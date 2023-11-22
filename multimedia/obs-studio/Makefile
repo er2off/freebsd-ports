@@ -1,9 +1,9 @@
 PORTNAME=	obs-studio
 DISTVERSION=	30.0.0
-PORTREVISION=	0
+PORTREVISION=	1
 CATEGORIES=	multimedia
 
-MAINTAINER=	yuri@FreeBSD.org
+MAINTAINER=	er2@dismail.de
 COMMENT=	Open source streaming/recording software
 WWW=		https://obsproject.com/
 
@@ -13,9 +13,13 @@ LICENSE_FILE=	${WRKSRC}/COPYING
 BROKEN_FreeBSD_12=	fatal error: 'sys/eventfd.h' file not found
 
 BUILD_DEPENDS=	v4l_compat>=0:multimedia/v4l_compat \
+		nlohmann-json>=0:devel/nlohmann-json \
+		websocketpp>=0:devel/websocketpp \
+		asio>=0:net/asio \
 		swig:devel/swig
 LIB_DEPENDS=	libavcodec.so:multimedia/ffmpeg \
 		libcurl.so:ftp/curl \
+		libdatachannel.so:www/libdatachannel \
 		libdbus-1.so:devel/dbus \
 		libfdk-aac.so:audio/fdk-aac \
 		libfontconfig.so:x11-fonts/fontconfig \
@@ -40,6 +44,8 @@ LIB_DEPENDS=	libavcodec.so:multimedia/ffmpeg \
 		libuuid.so:misc/e2fsprogs-libuuid \
 		libva.so:multimedia/libva
 
+		#libqrcodegen.so:graphics/qr-code-generator
+
 USES=		cmake compiler:c++17-lang desktop-file-utils gl gnome lua luajit \
 		pkgconfig python qt:6 xorg
 USE_QT=		base svg tools:build
@@ -50,26 +56,18 @@ USE_LDCONFIG=	yes
 
 USE_GITHUB=	yes
 GH_ACCOUNT=	obsproject
-GH_TUPLE=	obsproject:obs-amd-encoder:d5a136c6834c39293ad749cf8f07bdaa772fe44b:obsproject_obs_amd_encoder/plugins/enc-amf \
-		obsproject:obs-browser:e2310b02df3e6c184fe6eb6608244a82e37f582e:obsproject_obs_browser/plugins/obs-browser \
-		obsproject:obs-websocket:5716577019b1ccda01a12db2cba35a023082b7ad:obsproject_obs_websocket/plugins/obs-websocket \
-			chriskohlhoff:asio:b73dc1d:chriskohlhoff_asio/plugins/obs-websocket/deps/asio \
+GH_TUPLE=	obsproject:obs-browser:e397df5:obsproject_obs_browser/plugins/obs-browser \
+		obsproject:obs-websocket:4ff109b:obsproject_obs_websocket/plugins/obs-websocket \
 			nayuki:QR-Code-generator:8518684:nayuki_QR_Code_generator/plugins/obs-websocket/deps/qr \
-			nlohmann:json:a34e011:nlohmann_json/plugins/obs-websocket/deps/json \
-			zaphoyd:websocketpp:56123c8:zaphoyd_websocketpp/plugins/obs-websocket/deps/websocketpp \
-		obsproject:libdshowcapture:a93f1a34c14e91b5c540f264fb965f32caf77336:obsproject_libdshowcapture/plugins/win-dshow/libdshowcapture \
-			elgatosf:capture-device-support:bedcf28ed7a74eb7bf96a383fd18d2f5a1849b10:elgatosf_capture_device_support/plugins/win-dshow/libdshowcapture/external/capture-device-support \
-		palana:Syphon-Framework:01b144811f6f7080b70b2d7cc729da071f86f9d7:palana_Syphon_Framework/plugins/mac-syphon/syphon-framework \
-		Mixer:ftl-sdk:d0c8469f66806b5ea738d607f7d2b000af8b1129:Mixer_ftl_sdk/plugins/obs-outputs/ftl-sdk \
-			curl:curl:44b9b4d4f56d6f6de92c89636994c03984e9cd01:curl_curl/plugins/obs-outputs/ftl-sdk/libcurl \
-			akheron:jansson:bc5741fb1ac730ead24e9bd08977fc6c248e04b0:akheron_jansson/plugins/obs-outputs/ftl-sdk/libjansson
+		Mixer:ftl-sdk:d0c8469:Mixer_ftl_sdk/plugins/obs-outputs/ftl-sdk \
+			curl:curl:44b9b4d:curl_curl/plugins/obs-outputs/ftl-sdk/libcurl \
+			akheron:jansson:bc5741f:akheron_jansson/plugins/obs-outputs/ftl-sdk/libjansson
 
-CMAKE_ON=	UNIX_STRUCTURE
+CMAKE_ON=	UNIX_STRUCTURE OS_FREEBSD
+CMAKE_OFF=	ENABLE_AJA
 CMAKE_ARGS=	-DOBS_VERSION_OVERRIDE:STRING="${PORTVERSION}" \
 		-DQT_VERSION=6 \
 		-DPython_EXECUTABLE="${PYTHON_CMD}"
-
-LDFLAGS+=	-fPIC # pending https://github.com/obsproject/obs-studio/issues/3436
 
 OPTIONS_DEFINE=		BROWSER PIPEWIRE VLC VST WAYLAND
 OPTIONS_DEFAULT=	PIPEWIRE VLC VST WAYLAND
