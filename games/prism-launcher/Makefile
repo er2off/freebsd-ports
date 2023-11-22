@@ -27,6 +27,6 @@ USE_JAVA=	8+
 USE_QT=		core concurrent gui network testlib:build widgets xml
 
 post-install:
-	@${INSTALL_SCRIPT} ${.CURDIR}/minecraft-runtime ${STAGEDIR}${PREFIX}/bin/minecraft-runtime
+	${INSTALL_SCRIPT} ${.CURDIR}/minecraft-runtime ${STAGEDIR}${PREFIX}/bin/minecraft-runtime
 
 .include <bsd.port.mk>
