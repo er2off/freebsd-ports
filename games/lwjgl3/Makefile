@@ -12,6 +12,9 @@ WWW=		https://lwjgl.org
 LICENSE=	BSD3CLAUSE
 LICENSE_FILE=	${WRKSRC}/LICENSE.md
 
+ONLY_FOR_ARCHS=       amd64
+ONLY_FOR_ARCHS_REASON=        Some artifacts are not built by LWJGL CI infrastructure. Comment and try -Dbuild.offline=yes in MAKE_ARGS
+
 # We need 2 javas, yes
 BUILD_DEPENDS=	${LOCALBASE}/openjdk8/bin/java:java/openjdk8
 LIB_DEPENDS=	libopenal.so:audio/openal-soft \
