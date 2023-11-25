@@ -20,6 +20,8 @@ GH_TAGNAME=	23204fc
 GH_TUPLE=	nillerusr:source-physics:4098acb:ivp/ivp \
 		nillerusr:source-thirdparty:c5b901e:thirdparty/thirdparty
 
+IGNORE=		doesn't run
+
 32BITS=		armv7 i386
 64BITS=		amd64 aarch64
 ONLY_FOR_ARCHS=	${32BITS} ${64BITS}
