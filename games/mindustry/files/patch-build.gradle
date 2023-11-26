@@ -1,11 +1,11 @@
---- build.gradle.orig	2023-11-26 12:25:33 UTC
+--- build.gradle.orig	2023-11-26 14:20:06 UTC
 +++ build.gradle
-@@ -49,7 +49,7 @@ allprojects{
-         }
+@@ -2,7 +2,7 @@ buildscript{
+     ext{
+         arcHash = property("archash")
  
-         localArc = {
--            return !project.hasProperty("release") && !project.hasProperty("noLocalArc") && new File(projectDir.parent, '../Arc').exists()
-+            return true //!project.hasProperty("release") && !project.hasProperty("noLocalArc") && new File(projectDir.parent, '../Arc').exists()
-         }
+-        localArc = !project.hasProperty("release") && new File(rootDir.parent, 'Arc').exists() && !project.hasProperty("noLocalArc")
++        localArc = true //!project.hasProperty("release") && new File(rootDir.parent, 'Arc').exists() && !project.hasProperty("noLocalArc")
  
          arcModule = { String name ->
+             //skip to last submodule

@@ -1,11 +1,23 @@
---- settings.gradle.orig	2023-11-26 12:25:40 UTC
+--- settings.gradle.orig	2023-11-25 17:54:05 UTC
 +++ settings.gradle
-@@ -33,7 +33,7 @@ if(hasSdk){
+@@ -33,10 +33,10 @@ if(hasSdk){
      println("No Android SDK found. Skipping Android module.")
  }
  
--if(!hasProperty("release")){
-+if(true){ //!hasProperty("release")){
-     if(new File(settingsDir, '../Arc').exists()){
-         use(
-         ':Arc',
+-if(!hasProperty("release") && !hasProperty("noLocalArc")){
+-    if(new File(rootDir.parent, 'Arc').exists()){
++if(true){ //!hasProperty("release") && !hasProperty("noLocalArc")){
++    if(new File(rootDir, 'Arc').exists()){
+         println("Compiling with localArc")
+-        includeBuild("../Arc")
++        includeBuild("Arc")
+     }
+ 
+     if(new File(rootDir.parent, 'Mindustry-Debug').exists()){
+@@ -45,4 +45,4 @@ if(!hasProperty("release") && !hasProperty("noLocalArc
+     }
+ }else{
+     println("Not including local repositories.")
+-}
+\ No newline at end of file
++}

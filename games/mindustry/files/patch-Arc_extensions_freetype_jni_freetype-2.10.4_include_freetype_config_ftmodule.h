@@ -1,5 +1,5 @@
---- ../Arc/extensions/freetype/jni/freetype-2.10.4/include/freetype/config/ftmodule.h.orig	2023-11-26 13:46 UTC
-+++ ../Arc/extensions/freetype/jni/freetype-2.10.4/include/freetype/config/ftmodule.h
+--- Arc/extensions/freetype/jni/freetype-2.10.4/include/freetype/config/ftmodule.h.orig	2023-11-26 13:46 UTC
++++ Arc/extensions/freetype/jni/freetype-2.10.4/include/freetype/config/ftmodule.h
 @@ -12,19 +12,8 @@ FT_USE_MODULE( FT_Driver_ClassRec, tt_driver_class )
  
  FT_USE_MODULE( FT_Module_Class, autofit_module_class )
