@@ -1,0 +1,4 @@
+bin/mindustry
+share/applications/mindustry.desktop
+share/icons/hicolor/512x512/apps/mindustry.png
+%%DATADIR%%/Mindustry.jar

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+/usr/local/openjdk17/bin/java -jar /usr/local/share/mindustry/Mindustry.jar

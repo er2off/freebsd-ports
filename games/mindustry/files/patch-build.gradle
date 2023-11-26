@@ -1,0 +1,11 @@
+--- build.gradle.orig	2023-11-26 12:25:33 UTC
++++ build.gradle
+@@ -49,7 +49,7 @@ allprojects{
+         }
+ 
+         localArc = {
+-            return !project.hasProperty("release") && !project.hasProperty("noLocalArc") && new File(projectDir.parent, '../Arc').exists()
++            return true //!project.hasProperty("release") && !project.hasProperty("noLocalArc") && new File(projectDir.parent, '../Arc').exists()
+         }
+ 
+         arcModule = { String name ->

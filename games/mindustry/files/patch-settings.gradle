@@ -1,0 +1,11 @@
+--- settings.gradle.orig	2023-11-26 12:25:40 UTC
++++ settings.gradle
+@@ -33,7 +33,7 @@ if(hasSdk){
+     println("No Android SDK found. Skipping Android module.")
+ }
+ 
+-if(!hasProperty("release")){
++if(true){ //!hasProperty("release")){
+     if(new File(settingsDir, '../Arc').exists()){
+         use(
+         ':Arc',
