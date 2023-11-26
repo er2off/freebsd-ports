@@ -39,7 +39,7 @@ PORTDOCS=	*
 
 post-patch:
 	@${REINPLACE_CMD} -Ee \
-		'/(Exec|Icon|MimeType)/ s|love|&${PKGNAMESUFFIX}|; s|LÖVE|& ${PKGNAMESUFFIX}|; /^Comment/ s|$$| (pre-release version 12.0)|' \
+		'/(Exec|Icon|MimeType)/ s|love|&${PKGNAMESUFFIX}|; s|LÖVE|& ${PKGNAMESUFFIX}|; /^Comment/ s|$$| (pre-release version 12.0)|; /^NoDisplay/ s|true|false|' \
 		${WRKSRC}/platform/unix/love.desktop.in
 	@${REINPLACE_CMD} -e 's|x-love-game|x-love${PKGNAMESUFFIX}-game|; s|LÖVE|& ${PKGNAMESUFFIX}|' \
 		${WRKSRC}/platform/unix/love.xml

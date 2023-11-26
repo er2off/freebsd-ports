@@ -29,11 +29,12 @@
  
  # Our install script (and NSIS) doesn't fully support Windows ARM64 yet.
  if(MEGA_ARM64)
-@@ -2077,6 +2077,28 @@ endif()
+@@ -2077,6 +2077,29 @@ endif()
  	endforeach()
  	install(FILES ${LOVE_MSVC_DLLS} DESTINATION .)
  endif()
 +
++set(bindir /usr/local/bin)
 +configure_file(
 +	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.desktop.in
 +	${CMAKE_CURRENT_BINARY_DIR}/platform/unix/love.desktop
