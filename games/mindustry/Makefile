@@ -13,11 +13,11 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 # ant inside gradle in arc
 BUILD_DEPENDS=		gradle761>=7.6.1:devel/gradle761 \
 			${LOCALBASE}/bin/ant:devel/apache-ant
-EXTRACT_DEPENDS=	${LOCALBASE}/bin/unzip:archivers/unzip \
-			stb>=g20211010:devel/stb
+EXTRACT_DEPENDS=	${LOCALBASE}/include/stb/stb_image.h:devel/stb
 
-DIST_SUBDIR=	Mindustry
-USES=		compiler:c++17-lang
+USES=		compiler:c++17-lang gl sdl
+USE_SDL=	sdl2
+USE_GL=		gl glu
 USE_JAVA=	17
 JAVA_BUILD=	jdk
 JAVA_RUN=	yes
@@ -29,6 +29,8 @@ GH_TUPLE=	Anuken:Arc:34775c7:Arc/Arc \
 		Anuken:soloud:v0.9:soloud/Arc/arc-core/csrc/soloud \
 		freetype:freetype:VER-2-10-4:freetype/Arc/extensions/freetype/jni/freetype-2.10.4
 #		nigels-com:glew:glew-2.2.0:glew/Arc/backends/backend-sdl/jni/glew-2.2.0
+MASTER_SITES+=	https://github.com/nigels-com/glew/releases/download/glew-2.2.0/
+DISTFILES+=	glew-2.2.0.zip
 USE_LDCONFIG=	yes
 
 _GRADLE_ENV=	GRADLE_USER_HOME=${WRKDIR}/gradle-home \
@@ -37,18 +39,13 @@ _GRADLE_RUN=	${SETENV} ${_GRADLE_ENV} gradle761 --no-daemon -Prelease=yes
 
 ARCDIR=	${WRKSRC}/Arc
 
-# Looks weird, please FIXME
-
-pre-fetch:
-	@fetch -apr -o ${_DISTDIR}/glew.zip https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.zip
-
 post-extract:
 	@${MKDIR} ${ARCDIR}/arc-core/csrc/
 	@${MKDIR} ${ARCDIR}/backends/backend-sdl/jni/
 	@${CP} ${PREFIX}/include/stb/stb_image.h ${ARCDIR}/arc-core/csrc/
 	@${TOUCH} ${ARCDIR}/backends/backend-sdl/jni/glew.zip
 	@${TOUCH} ${ARCDIR}/backends/backend-sdl/jni/sdlmingw.tar.gz
-	@${UNZIP_CMD} -qq -d ${ARCDIR}/backends/backend-sdl/jni/ ${_DISTDIR}/glew.zip
+	@${LN} -s ${WRKDIR}/glew-2.2.0 ${ARCDIR}/backends/backend-sdl/jni/glew-2.2.0
 
 do-build:
 	@cd ${ARCDIR} && ${_GRADLE_RUN} \
