@@ -1,12 +1,10 @@
-TIMESTAMP = 1700662159
+TIMESTAMP = 1701176058
 SHA256 (obsproject-obs-studio-30.0.0_GH0.tar.gz) = c23dd463862b1a8f40365d84fd52105d7eafc3614fb3d470b695ba28a6e4da06
 SIZE (obsproject-obs-studio-30.0.0_GH0.tar.gz) = 15850826
 SHA256 (obsproject-obs-browser-e397df5_GH0.tar.gz) = 35e94bf61b159bfc06cb7d800a468a386b8c7985ab834dcc01fa7a5670a5462c
 SIZE (obsproject-obs-browser-e397df5_GH0.tar.gz) = 109239
 SHA256 (obsproject-obs-websocket-4ff109b_GH0.tar.gz) = 598b25c4fe39a6493f90cea9d718e58324beb2c642594e747a0302fd32e6cccd
 SIZE (obsproject-obs-websocket-4ff109b_GH0.tar.gz) = 240481
-SHA256 (nayuki-QR-Code-generator-8518684_GH0.tar.gz) = 0fa3e16822e66343d10ba0ba2787378e44d88686d9836476d2df041a59b729e9
-SIZE (nayuki-QR-Code-generator-8518684_GH0.tar.gz) = 135743
 SHA256 (Mixer-ftl-sdk-d0c8469_GH0.tar.gz) = f6cf3a53562962da41fbd7c7f9fd64955f0493fcf585e8d5d6a8918cc5c4c1e2
 SIZE (Mixer-ftl-sdk-d0c8469_GH0.tar.gz) = 95426
 SHA256 (curl-curl-44b9b4d_GH0.tar.gz) = bcd2d313c07c07676f8039771aa952f886def0ff21f3d6b3a493683c2d6f75c1

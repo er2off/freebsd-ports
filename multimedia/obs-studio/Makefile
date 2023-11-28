@@ -27,6 +27,7 @@ LIB_DEPENDS=	libavcodec.so:multimedia/ffmpeg \
 		libjansson.so:devel/jansson \
 		libmbedtls.so:security/mbedtls \
 		libpci.so:devel/libpci \
+		libqrcodegen.so:graphics/qr-code-generator \
 		librist.so:multimedia/librist \
 		librnnoise.so:audio/rnnoise \
 		libspeexdsp.so:audio/speexdsp \
@@ -44,8 +45,6 @@ LIB_DEPENDS=	libavcodec.so:multimedia/ffmpeg \
 		libuuid.so:misc/e2fsprogs-libuuid \
 		libva.so:multimedia/libva
 
-		#libqrcodegen.so:graphics/qr-code-generator
-
 USES=		cmake compiler:c++17-lang desktop-file-utils gl gnome lua luajit \
 		pkgconfig python qt:6 xorg
 USE_QT=		base svg tools:build
@@ -58,7 +57,6 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	obsproject
 GH_TUPLE=	obsproject:obs-browser:e397df5:obsproject_obs_browser/plugins/obs-browser \
 		obsproject:obs-websocket:4ff109b:obsproject_obs_websocket/plugins/obs-websocket \
-			nayuki:QR-Code-generator:8518684:nayuki_QR_Code_generator/plugins/obs-websocket/deps/qr \
 		Mixer:ftl-sdk:d0c8469:Mixer_ftl_sdk/plugins/obs-outputs/ftl-sdk \
 			curl:curl:44b9b4d:curl_curl/plugins/obs-outputs/ftl-sdk/libcurl \
 			akheron:jansson:bc5741f:akheron_jansson/plugins/obs-outputs/ftl-sdk/libjansson
