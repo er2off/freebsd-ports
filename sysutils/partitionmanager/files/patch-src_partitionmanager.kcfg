@@ -1,0 +1,18 @@
+--- src/partitionmanager.kcfg.orig	2023-11-30 11:37:49 UTC
++++ src/partitionmanager.kcfg
+@@ -100,6 +100,7 @@ -->
+ 					<value>BitLocker</value>
+ 					<value>Apfs</value>
+ 					<value>Minix</value>
++					<value>FreeBSDSwap</value>
+ 				</values>
+ 			</parameter>
+ 			<default param="Unknown">220,205,175</default>
+@@ -136,6 +137,7 @@ -->
+ 			<default param="BitLocker">110,20,50</default>
+ 			<default param="Apfs">255,155,174</default>
+ 			<default param="Minix">0,170,255</default>            
++			<default param="FreeBSDSwap">155,155,130</default>
+ 		</entry>
+ 		<entry key="showMenuBar" type="Bool">
+ 			<label context="@label">Show the application's menu bar</label>
