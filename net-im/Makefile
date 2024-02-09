@@ -1,5 +1,5 @@
     COMMENT = Instant messaging
 
-    SUBDIR += linux-discord
+    SUBDIR += armcord
 
 .include <bsd.port.subdir.mk>

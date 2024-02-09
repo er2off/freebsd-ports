@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=ArmCord
+Exec=/usr/local/bin/electron25 /usr/local/share/armcord/app.asar
+Terminal=false
+Type=Application
+Icon=armcord
+StartupWMClass=ArmCord
+Comment=ArmCord is a custom client designed to enhance your Discord experience while keeping everything lightweight.
+Categories=Network;
