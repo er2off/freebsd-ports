@@ -1,0 +1,11 @@
+--- CMakeLists.txt.orig	2024-03-29 12:12:15 UTC
++++ CMakeLists.txt
+@@ -18,7 +18,7 @@ if (BUILD_CUTTER_PLUGIN)
+ 
+ if (BUILD_CUTTER_PLUGIN)
+ 	find_package(Cutter REQUIRED)
+-	set(CUTTER_INSTALL_PLUGDIR "${Cutter_USER_PLUGINDIR}" CACHE STRING "Directory to install Cutter plugin into")
++	set(CUTTER_INSTALL_PLUGDIR "/usr/local/share/rizin/cutter/plugins/native" CACHE STRING "Directory to install Cutter plugin into")
+ endif()
+ 
+ if(CMAKE_VERSION VERSION_LESS "3.1")

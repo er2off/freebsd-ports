@@ -1,0 +1,22 @@
+--- meson.build.orig	2024-03-29 09:53:24 UTC
++++ meson.build
+@@ -5,9 +5,16 @@ cc = meson.get_compiler('c')
+ 
+ cc = meson.get_compiler('c')
+ 
+-libquickjs_proj = subproject('libquickjs', default_options: ['default_library=static'])
+-libquickjs_dep = libquickjs_proj.get_variable('quickjs_dep')
+-qjsc = libquickjs_proj.get_variable('qjsc')
++libquickjs_inc = include_directories('/usr/local/include/quickjs')
++libquickjs_lib = cc.find_library(
++    'quickjs',
++    required: true,
++    dirs: ['/usr/local/lib'],
++    has_headers: 'quickjs.h',
++    header_include_directories: libquickjs_inc
++)
++libquickjs_dep = declare_dependency(dependencies: libquickjs_lib, include_directories: libquickjs_inc)
++qjsc = '/usr/local/bin/qjsc'
+ 
+ jsdec_incs = ['.', 'c']
+ jsdec_c_args = []

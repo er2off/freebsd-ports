@@ -1,0 +1,2 @@
+Simple decompiler for Rizin. Converts asm to pseudo-C code.
+Uses quickjs for JavaScript files.

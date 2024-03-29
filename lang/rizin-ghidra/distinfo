@@ -1,0 +1,7 @@
+TIMESTAMP = 1711712830
+SHA256 (rizinorg-rz-ghidra-v0.7.0_GH0.tar.gz) = 5828cf6df2001e96762b8ba18fca8811e153d5475fe9565eb1f4860103108310
+SIZE (rizinorg-rz-ghidra-v0.7.0_GH0.tar.gz) = 115516
+SHA256 (rizinorg-ghidra-b82c65a_GH0.tar.gz) = 58b1340d05358af81917dd4a52fe9fd7fdd14d122f0afb1ea327aa286563432c
+SIZE (rizinorg-ghidra-b82c65a_GH0.tar.gz) = 67024091
+SHA256 (zeux-pugixml-fdf0295_GH0.tar.gz) = b73a69b6f3925f63b1d6fcba4df9d4a8b6276bd7ce1220e07ccff7690ac50d02
+SIZE (zeux-pugixml-fdf0295_GH0.tar.gz) = 561136
