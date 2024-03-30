@@ -1,3 +1,4 @@
+bin/armcord
 share/applications/armcord.desktop
 %%DATADIR%%/app.asar
 share/icons/hicolor/512x512/apps/armcord.png

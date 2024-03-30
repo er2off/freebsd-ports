@@ -96,6 +96,7 @@ do-install:
 	@${MKDIR} ${STAGEDIR}${PREFIX}/share/icons/hicolor/512x512/apps/
 	${INSTALL_DATA} ${WRKSRC}/assets/desktop.png ${STAGEDIR}${PREFIX}/share/icons/hicolor/512x512/apps/armcord.png
 	${INSTALL_DATA} ${FILESDIR}/armcord.desktop ${STAGEDIR}${DESKTOPDIR}/armcord.desktop
+	${INSTALL_SCRIPT} ${FILESDIR}/armcord ${STAGEDIR}${PREFIX}/bin/armcord
 	@cd ${WRKSRC} && npx asar pack install/ ${STAGEDIR}${DATADIR}/app.asar
 
 .include <bsd.port.mk>

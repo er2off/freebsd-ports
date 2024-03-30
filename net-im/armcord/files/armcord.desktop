@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=ArmCord
-Exec=/usr/local/bin/electron25 /usr/local/share/armcord/app.asar
+Exec=armcord
 Terminal=false
 Type=Application
 Icon=armcord
