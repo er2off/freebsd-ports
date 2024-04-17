@@ -1,0 +1,35 @@
+--- build.xml.orig	2023-11-22 12:40:39 UTC
++++ build.xml
+@@ -1018,7 +1018,14 @@
+             <arg line="-J-Dfile.encoding=UTF8 -J-Dline.separator=&#10;"/>
+             <arg line="--add-exports jdk.javadoc/com.sun.tools.doclets=ALL-UNNAMED" if:set="jdk9"/>
+         </javadoc>
+-        <get-quiet name="favicon" url="https://www.lwjgl.org/favicon.ico" dest="${bin.javadoc}"/>
++        <get-quiet name="favicon" url="https://www.lwjgl.org/favicon.ico" dest="bin/favicon.ico"/>
++        <quiet>
++            <copy
++                file ="bin/favicon.ico"
++                todir="${bin.javadoc}"
++                quiet="true"
++            />
++        </quiet>
+ 
+         <java classname="org.lwjgl.system.JavadocPostProcess" failonerror="true">
+             <classpath path="${bin.generator}"/>
+@@ -1412,7 +1419,15 @@
+                 <arg line="-J-Dfile.encoding=UTF8 -J-Dline.separator=&#10;"/>
+                 <arg line="--add-exports jdk.javadoc/com.sun.tools.doclets=ALL-UNNAMED" if:set="jdk9"/>
+             </javadoc>
+-            <get-quiet name="favicon" url="https://www.lwjgl.org/favicon.ico" dest="${release}/${module}/javadoc" unless:set="javadoc.skip"/>
++            <get-quiet name="favicon" url="https://www.lwjgl.org/favicon.ico" dest="bin/favicon.ico" unless:set="javadoc.skip"/>
++            <quiet>
++                <copy
++                    file ="bin/favicon.ico"
++                    todir="${release}/${module}/javadoc"
++                    quiet="true"
++                    unless:set="javadoc.skip"
++                />
++            </quiet>
+ 
+             <java classname="org.lwjgl.system.JavadocPostProcess" failonerror="true" unless:set="javadoc.skip">
+                 <classpath path="${bin.generator}"/>
