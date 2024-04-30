@@ -1,0 +1,4 @@
+bin/mcpelauncher-extract
+bin/mcpelauncher-ui-qt
+share/applications/mcpelauncher-ui-qt.desktop
+share/pixmaps/mcpelauncher-ui-qt.svg
