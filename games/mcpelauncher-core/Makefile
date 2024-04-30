@@ -1,8 +1,9 @@
-PORTNAME=	mcpelauncher
+PORTNAME=	core
 DISTVERSIONPREFIX=	v
 DISTVERSION=	0.14.3
 DISTVERSIONSUFFIX=	-qt6
 CATEGORIES=	games
+PKGNAMEPREFIX=	mcpelauncher-
 
 MAINTAINER=	er2@dismail.de
 COMMENT=	Minecraft Bedrock Edition launcher

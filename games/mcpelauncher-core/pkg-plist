@@ -1,0 +1,13 @@
+bin/mcpelauncher-client
+bin/mcpelauncher-error
+bin/mcpelauncher-webview
+share/mcpelauncher/gamecontrollerdb.txt
+share/mcpelauncher/lib/armeabi-v7a/README.MD
+share/mcpelauncher/lib/armeabi-v7a/__aeabi.c
+share/mcpelauncher/lib/armeabi-v7a/exidx_dynamic.c
+share/mcpelauncher/lib/armeabi-v7a/libc.so
+share/mcpelauncher/lib/armeabi-v7a/libcrt_compat.c
+share/mcpelauncher/lib/armeabi-v7a/libm.so
+share/mcpelauncher/lib/native/x86/libfmod.so.10.20
+share/mcpelauncher/lib/native/x86/libfmod.so.12.0
+share/mcpelauncher/lib/native/x86_64/libfmod.so.12.0
