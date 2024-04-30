@@ -1,10 +1,6 @@
 bin/mcpelauncher-client
 bin/mcpelauncher-error
 bin/mcpelauncher-webview
-include/nlohmann/json.hpp
-lib/cmake/nlohmann_json/nlohmann_jsonConfig.cmake
-lib/cmake/nlohmann_json/nlohmann_jsonConfigVersion.cmake
-lib/cmake/nlohmann_json/nlohmann_jsonTargets.cmake
 %%DATADIR%%/gamecontrollerdb.txt
 %%DATADIR%%/lib/armeabi-v7a/README.MD
 %%DATADIR%%/lib/armeabi-v7a/__aeabi.c

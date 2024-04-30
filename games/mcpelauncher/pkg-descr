@@ -1,3 +1,4 @@
-An unstable unofficial launcher for the Android version of Minecraft: Bedrock Edition on linux, macOS and now FreeBSD.
+An unstable unofficial launcher for the Android version of
+Minecraft: Bedrock Edition on Linux, macOS and FreeBSD.
 
-This package doesn't contain any UI.
+This port doesn't contain GUI launcher and Microsoft Account login daemon.

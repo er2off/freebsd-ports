@@ -1,4 +1,4 @@
---- CMakeLists.txt.orig	2024-03-16 10:31:39 UTC
+--- CMakeLists.txt.orig	2024-04-18 08:15:31 UTC
 +++ CMakeLists.txt
 @@ -9,6 +9,10 @@ endif()
      set(IS_64BIT TRUE)
@@ -11,15 +11,6 @@
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-delete-null-pointer-checks")
  
  set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-@@ -27,6 +31,8 @@ elseif(BUILD_X86)
-     if(APPLE)
-         set(CMAKE_LIBRARY_ARCHITECTURE "i386-apple-darwin")
-         set(CMAKE_CXX_COMPILER_TARGET "i686-apple-darwin")
-+    elseif(FREEBSD)
-+        message(FATAL_ERROR "FreeBSD build doesn't support BUILD_X86 and requires 32-bit system to link normally")
-     else()
-         set(CMAKE_LIBRARY_ARCHITECTURE "i386-linux-gnu")
-         set(CMAKE_CXX_COMPILER_TARGET "i686-linux-gnu")
 @@ -51,7 +57,7 @@ endfunction()
          set(${OUT_VAL} "" PARENT_SCOPE)
      endif()
@@ -29,17 +20,7 @@
  
  option(BUILD_CLIENT "Enables building of the client launcher." ON)
  option(BUILD_UI "Enables building of the client ui requires qt." ON)
-@@ -75,7 +81,8 @@ endif()
-     include(ext/curl.cmake)
- endif()
- 
--include(ext/json.cmake)
-+#include(ext/json.cmake)
-+add_subdirectory(nlohmann-json)
- 
- option(USE_GAMECONTROLLERDB "Downloads gamecontrollerdb.txt from gabomdq/SDL_GameControllerDB" ON)
- if (USE_GAMECONTROLLERDB AND BUILD_CLIENT)
-@@ -107,6 +114,9 @@ if (APPLE)
+@@ -107,6 +113,9 @@ if (APPLE)
  
  if (APPLE)
      add_subdirectory(osx-elf-header)
