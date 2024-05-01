@@ -26,7 +26,6 @@ GH_TUPLE=	MCMrARM:axml-parser:e5d2610:axmlparser/axml-parser \
 		minecraft-linux:mcpelauncher-ui-qt:ca0e99d:mcpelauncheruiqt/mcpelauncher-ui-qt \
 		minecraft-linux:playdl-signin-ui-qt:02a89aa:playdlsigninuiqt/playdl-signin-ui-qt
 
-CMAKE_ON=	DISABLE_32BIT
 CMAKE_OFF=	LAUNCHER_ENABLE_GLFW
 # Allow piracy?
 CMAKE_OFF+=	LAUNCHER_ENABLE_GOOGLE_PLAY_LICENCE_CHECK
