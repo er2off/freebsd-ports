@@ -25,12 +25,11 @@ GH_TUPLE=	commonmark:cmark:8fbf029:cmark/libraries/cmark \
 USE_LDCONFIG=	yes
 USE_JAVA=	8+
 USE_QT=		5compat base
-USE_JAVA=	yes
 JAVA_VERSION=	17 18 19
 JAVA_RUN=	yes
+JAVA_BUILD=	JDK
 
-CONFLICTS=	openjdk21 openjdk22
-
-CMAKE_ARGS=	-DLauncher_BUILD_PLATFORM=FreeBSD
+CMAKE_ARGS=	-DJAVA_HOME=${JAVA_HOME} -DJava_JAVAC_EXECUTABLE=${JAVAC} \
+		-DLauncher_BUILD_PLATFORM=FreeBSD
 
 .include <bsd.port.mk>
