@@ -1,4 +1,5 @@
 {
+  "version": "@ARMCORD_VER@",
   "main": "ts-out/main.js",
   "dependencies": {
     "arrpc": "file:src/arrpc",

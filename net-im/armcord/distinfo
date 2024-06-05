@@ -1,7 +1,7 @@
-TIMESTAMP = 1707479080
-SHA256 (armcord-3.2.6-node-modules-build.tar.gz) = e63305a10bcf8aba69e2b9beeaf420cbe6d30b089b57a741d02f5e70ff033e1a
-SIZE (armcord-3.2.6-node-modules-build.tar.gz) = 14561288
-SHA256 (armcord-3.2.6-node-modules-install.tar.gz) = d24c693bae7bca2c5d161d4aa0f98a94bb24960fd7a9436f87531933a56b8e9f
-SIZE (armcord-3.2.6-node-modules-install.tar.gz) = 1104775
-SHA256 (ArmCord-ArmCord-v3.2.6_GH0.tar.gz) = 57b0696f443287e8aa8e2bd03ee8043a2305f13c3ea6e538840739494131fc6a
-SIZE (ArmCord-ArmCord-v3.2.6_GH0.tar.gz) = 2037117
+TIMESTAMP = 1717581117
+SHA256 (armcord-3.2.7-node-modules-build.tar.gz) = d2584670089ff7dd6b3b19249dd26ac79a2f3220a66448cfb7404236a4d75246
+SIZE (armcord-3.2.7-node-modules-build.tar.gz) = 13929885
+SHA256 (armcord-3.2.7-node-modules-install.tar.gz) = 27429138465038c5be7d36112af43abf43764799e1f0f87a46109960b402814e
+SIZE (armcord-3.2.7-node-modules-install.tar.gz) = 751335
+SHA256 (ArmCord-ArmCord-v3.2.7_GH0.tar.gz) = a67d20fa66c9f1fcd9bc54e4225174195269cb1f9ee554374bf96e9828772190
+SIZE (ArmCord-ArmCord-v3.2.7_GH0.tar.gz) = 1162149

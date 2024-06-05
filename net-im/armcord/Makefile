@@ -1,6 +1,6 @@
 PORTNAME=	armcord
 DISTVERSIONPREFIX=	v
-DISTVERSION=	3.2.6
+DISTVERSION=	3.2.7
 CATEGORIES=	net-im www
 DISTFILES=	${PREFETCH_BUILD_FILE}:prefetch \
 		${PREFETCH_INSTALL_FILE}:prefetch
@@ -15,23 +15,25 @@ LICENSE_FILE=	${WRKSRC}/LICENSE
 
 FETCH_DEPENDS=	npm:www/npm${NODEJS_SUFFIX}
 BUILD_DEPENDS=	npm:www/npm${NODEJS_SUFFIX} \
-		electron25>=25.0.0:devel/electron25
-RUN_DEPENDS=	electron25>=25.0.0:devel/electron25
+		electron${ELECTRON_VER_MAJOR}:devel/electron${ELECTRON_VER_MAJOR}
+RUN_DEPENDS=	electron${ELECTRON_VER_MAJOR}:devel/electron${ELECTRON_VER_MAJOR}
 
 USES=		desktop-file-utils
 USE_GITHUB=	yes
 GH_ACCOUNT=	ArmCord
 GH_PROJECT=	ArmCord
 
+ELECTRON_VER_MAJOR=28
+
 # Taken from security/bitwarden-cli
 
 PREFETCH_BUILD_FILE=	${PORTNAME}-${DISTVERSION}-node-modules-build${EXTRACT_SUFX}
 PREFETCH_INSTALL_FILE=	${PORTNAME}-${DISTVERSION}-node-modules-install${EXTRACT_SUFX}
 NPM_BUILD_DEPENDS=	copyfiles@2.4.1 typescript@4.9.3 \
-			@types/node@18.11.9 @types/ws@8.5.3 electron@28.2.0 \
+			@types/node@20.11.1 @types/ws@8.5.3 electron@30.0.5 \
 			ws@8.11.0 cross-fetch@3.1.5 \
 			electron-context-menu@github:ArmCord/electron-context-menu \
-			@electron/asar@3.2.8
+			@electron/asar@3.2.10
 NPM_INSTALL_DEPENDS=	cross-fetch@3.1.5 ws@8.11.0 \
 			electron-context-menu@github:ArmCord/electron-context-menu \
 			extract-zip@2.0.1 v8-compile-cache@2.3.0
@@ -91,12 +93,15 @@ pre-install:
 	@${CP} -R ${WRKDIR}/node_modules/ ${WRKSRC}/install/node_modules/
 	@${CP} -R ${WRKSRC}/src/arrpc/ ${WRKSRC}/install/node_modules/arrpc/
 	@${CP} -R ${FILESDIR}/package.json ${WRKSRC}/install/package.json
+	@${REINPLACE_CMD} -e 's/@ARMCORD_VER@/${DISTVERSION}/' ${WRKSRC}/install/package.json
 
 do-install:
 	@${MKDIR} ${STAGEDIR}${PREFIX}/share/icons/hicolor/512x512/apps/
 	${INSTALL_DATA} ${WRKSRC}/assets/desktop.png ${STAGEDIR}${PREFIX}/share/icons/hicolor/512x512/apps/armcord.png
 	${INSTALL_DATA} ${FILESDIR}/armcord.desktop ${STAGEDIR}${DESKTOPDIR}/armcord.desktop
 	${INSTALL_SCRIPT} ${FILESDIR}/armcord ${STAGEDIR}${PREFIX}/bin/armcord
+	@${REINPLACE_CMD} -e 's/@ELECTRON_VER_MAJOR@/${ELECTRON_VER_MAJOR}/' ${STAGEDIR}${PREFIX}/bin/armcord
+	@${RM} ${STAGEDIR}${PREFIX}/bin/armcord.bak
 	@cd ${WRKSRC} && npx asar pack install/ ${STAGEDIR}${DATADIR}/app.asar
 
 .include <bsd.port.mk>
