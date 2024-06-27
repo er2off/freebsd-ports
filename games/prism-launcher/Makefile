@@ -9,7 +9,7 @@ WWW=		https://prismlauncher.org
 LICENSE=	GPLv3
 LICENSE_FILE=	${WRKSRC}/COPYING.md
 
-LIB_DEPENDS=   libQt6Svg.so:graphics/qt6-svg
+LIB_DEPENDS=	libQt6Svg.so:graphics/qt6-svg
 RUN_DEPENDS=	lwjgl>=2.9.3:games/lwjgl \
 		lwjgl3>=3.0:games/lwjgl3
 
