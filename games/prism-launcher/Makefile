@@ -27,7 +27,7 @@ JAVA_BUILD=	JDK
 JAVA_RUN=	yes
 USE_KDE=	ecm:build
 USE_LDCONFIG=	yes
-USE_QT=		5compat base
+USE_QT=		5compat base svg
 
 CMAKE_ARGS=	-DJAVA_HOME=${JAVA_HOME} -DJava_JAVAC_EXECUTABLE=${JAVAC} \
 		-DLauncher_BUILD_PLATFORM=FreeBSD
