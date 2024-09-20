@@ -22,22 +22,21 @@ USES=		cmake compiler:c++11-lib desktop-file-utils gl openal \
 		pkgconfig sdl shared-mime-info
 USE_GITHUB=	yes
 GH_ACCOUNT=	love2d
-GH_TAGNAME=	20ffe94
+GH_TAGNAME=	876625d
 USE_SDL=	sdl2
 USE_GL=		gl glu
 
-OPTIONS_DEFINE=		DOCS LUAJIT
-OPTIONS_DEFAULT=	DOCS LUAJIT
+OPTIONS_DEFINE=		LUAJIT
+OPTIONS_DEFAULT=	LUAJIT
 
 LUAJIT_DESC=		Use luajit
 LUAJIT_LIB_DEPENDS=	libluajit-5.1.so:lang/luajit-devel
 LUAJIT_LIB_DEPENDS_OFF=	liblua-5.1.so:lang/lua51
 LUAJIT_CMAKE_BOOL=	LOVE_JIT
 
-CMAKE_ARGS=	-DSUFFIX=${PKGNAMESUFFIX}
-
-DOCSDIR=	${PREFIX}/share/doc/${PORTNAME}${PKGNAMESUFFIX}
-PORTDOCS=	*
+CMAKE_ARGS=	-DLOVE_EXE_NAME=love${PKGNAMESUFFIX} \
+		-DLOVE_LIB_NAME=liblove${PKGNAMESUFFIX} \
+		-DCMAKE_INSTALL_MANDIR=${PREFIX}/share/man
 
 post-patch:
 	@${REINPLACE_CMD} -Ee \
@@ -55,12 +54,5 @@ post-install:
 		${STAGEDIR}${PREFIX}/share/icons/hicolor/scalable/mimetypes/application-x-love${PKGNAMESUFFIX}-game.svg
 	@${MV} ${STAGEDIR}${PREFIX}/share/mime/packages/love.xml \
 		${STAGEDIR}${PREFIX}/share/mime/packages/love${PKGNAMESUFFIX}.xml
-
-post-install-DOCS-on:
-	@${MKDIR} ${STAGEDIR}${DOCSDIR}
-.for f in changes.txt readme.md
-	${INSTALL_DATA} ${WRKSRC}/${f} ${STAGEDIR}${DOCSDIR}
-.endfor
-	${INSTALL_MAN} ${WRKSRC}/platform/unix/love.6 ${STAGEDIR}${PREFIX}/man/man6/
 
 .include <bsd.port.mk>

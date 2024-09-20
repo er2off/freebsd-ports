@@ -1,61 +1,33 @@
---- CMakeLists.txt.orig	2023-11-16 03:15:27 UTC
+--- CMakeLists.txt.orig	2024-09-20 11:57:29 UTC
 +++ CMakeLists.txt
-@@ -27,8 +27,8 @@ project(love)
+@@ -2160,22 +2160,24 @@ if("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows")
+ 	")
  
- project(love)
+ 	include(CPack)
+-elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
++elseif(UNIX AND NOT APPLE)
+ 	include(GNUInstallDirs)
  
--set(LOVE_EXE_NAME love)
--set(LOVE_LIB_NAME liblove)
-+set(LOVE_EXE_NAME love${SUFFIX})
-+set(LOVE_LIB_NAME liblove${SUFFIX})
+ 	string(TIMESTAMP LOVE_CONFIGURE_TIMESTAMP "%a, %d %b %Y %H:%M:%S +0000" UTC)
  
- set(CMAKE_MODULE_PATH "${love_SOURCE_DIR}/extra/cmake" ${CMAKE_MODULE_PATH})
- # Needed for shared libs on Linux. (-fPIC).
-@@ -2022,7 +2022,7 @@ if (NOT MSVC)
- endif()
+-	file(COPY platform/unix/debian/ DESTINATION debian PATTERN "*.in" EXCLUDE)
+-	configure_file(platform/unix/debian/control.in debian/control @ONLY)
+-	configure_file(platform/unix/debian/changelog.in debian/changelog @ONLY)
+-	configure_file(platform/unix/debian/rules.in debian/rules @ONLY)
++	if("${CMAKE_SYSTEM_NAME}" STREQUAL "Linux")
++		file(COPY platform/unix/debian/ DESTINATION debian PATTERN "*.in" EXCLUDE)
++		configure_file(platform/unix/debian/control.in debian/control @ONLY)
++		configure_file(platform/unix/debian/changelog.in debian/changelog @ONLY)
++		configure_file(platform/unix/debian/rules.in debian/rules @ONLY)
++	endif()
  
- if (NOT MSVC)
--	return()
-+	#return()
- endif()
+ 	configure_file(platform/unix/love.desktop.in love.desktop @ONLY)
  
- ###################################
-@@ -2050,7 +2050,7 @@ message(STATUS "Version: ${LOVE_VERSION_STR}")
- ###################################
- # CPack
- ###################################
--install(TARGETS ${LOVE_EXE_NAME} ${LOVE_CONSOLE_EXE_NAME} ${LOVE_LIB_NAME} RUNTIME DESTINATION .)
-+install(TARGETS ${LOVE_EXE_NAME} ${LOVE_CONSOLE_EXE_NAME} ${LOVE_LIB_NAME} RUNTIME)
- 
- # Our install script (and NSIS) doesn't fully support Windows ARM64 yet.
- if(MEGA_ARM64)
-@@ -2077,6 +2077,29 @@ endif()
- 	endforeach()
- 	install(FILES ${LOVE_MSVC_DLLS} DESTINATION .)
- endif()
-+
-+set(bindir /usr/local/bin)
-+configure_file(
-+	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.desktop.in
-+	${CMAKE_CURRENT_BINARY_DIR}/platform/unix/love.desktop
-+)
-+#install(FILES
-+#	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.6
-+#	DESTINATION man/man6)
-+install(FILES
-+	${CMAKE_CURRENT_BINARY_DIR}/platform/unix/love.desktop
-+	DESTINATION share/applications)
-+install(FILES
-+	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.svg
-+	DESTINATION share/pixmaps)
-+install(FILES
-+	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/love.xml
-+	DESTINATION share/mime/packages)
-+install(FILES
-+	${CMAKE_CURRENT_SOURCE_DIR}/platform/unix/application-x-love-game.svg
-+	DESTINATION share/icons/hicolor/scalable/mimetypes)
-+
-+return()
- 
- # Copy a text file from CMAKE_CURRENT_SOURCE_DIR to CMAKE_CURRENT_BINARY_DIR.
- # On Windows, this function will convert line endings to CR,LF.
+ 	install(TARGETS love liblove)
+ 	install(FILES platform/unix/love.6
+ 			DESTINATION ${CMAKE_INSTALL_MANDIR}/man1
+-			RENAME love.1)
++			RENAME love12.1)
+ 	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/love.desktop
+ 			DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/applications)
+ 	install(FILES platform/unix/love.xml
