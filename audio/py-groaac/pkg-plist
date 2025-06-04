@@ -1,0 +1,5 @@
+share/applications/groaac.desktop
+%%DATADIR%%/config_utils.py
+%%DATADIR%%/ffmpeg_utils.py
+%%DATADIR%%/groaac.png
+%%DATADIR%%/main.py
