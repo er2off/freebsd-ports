@@ -1,0 +1,8 @@
+bin/yandex-music
+share/applications/yandex-music.desktop
+share/icons/hicolor/48x48/apps/yandex-music.png
+share/icons/hicolor/512x512/apps/yandex-music.png
+share/icons/hicolor/scalable/apps/yandex-music.svg
+share/pixmaps/yandex-music.png
+%%DATADIR%%/default.conf
+%%DATADIR%%/yandex-music.asar

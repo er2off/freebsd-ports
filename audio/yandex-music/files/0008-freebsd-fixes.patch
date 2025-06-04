@@ -1,0 +1,12 @@
+--- a/main/lib/deviceInfo.js	2025-05-30 17:21:34.934791000 +0300
++++ a/main/lib/deviceInfo.js	2025-05-30 17:22:40.504749000 +0300
+@@ -12,6 +12,9 @@
+ const store_js_2 = require("../types/store.js");
+ const deviceInfoLogger = new Logger_js_1.Logger('DeviceInfo');
+ exports.devicePlatform = (0, node_os_1.platform)();
++// Yandex fails to work with platform == "freebsd" and some other patches depends
++// on linux platform so we'll replace it here
++if (exports.devicePlatform == "freebsd") exports.devicePlatform = "linux";
+ const toMB = (bytes) => {
+     return Math.round(bytes / 1024 / 1024);
+ };

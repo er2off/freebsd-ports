@@ -1,0 +1,10 @@
+--- a/main/index.js	2025-05-30 18:07:15.129770000 +0300
++++ b/main/index.js	2025-05-30 18:07:46.641572000 +0300
+@@ -50,6 +50,7 @@
+     (0, handleExternalLink_js_1.handleExternalLink)(window);
+     (0, handleDeeplink_js_1.handleDeeplink)(window);
+     (0, handleHeadersReceived_js_1.handleHeadersReceived)(window);
++    require("./plus-hack.js").wrapper(); // This person is bad, use client without proper subscription!
+     (0, handleBackgroundTasks_js_1.handleBackgroundTasks)(window);
+     (0, handleCrash_js_1.handleCrash)();
+     await (0, loadURL_js_1.loadURL)(window);
