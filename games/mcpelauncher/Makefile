@@ -1,5 +1,5 @@
 PORTNAME=	mcpelauncher
-DISTVERSION=	0.14.3
+DISTVERSION=	1.4.1
 CATEGORIES=	x11 games
 
 MAINTAINER=	er2@dismail.de

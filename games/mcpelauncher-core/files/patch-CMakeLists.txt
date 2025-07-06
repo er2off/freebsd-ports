@@ -1,4 +1,4 @@
---- CMakeLists.txt.orig	2024-04-18 08:15:31 UTC
+--- CMakeLists.txt.orig	2025-07-02 10:23:20 UTC
 +++ CMakeLists.txt
 @@ -9,6 +9,10 @@ endif()
      set(IS_64BIT TRUE)
@@ -11,7 +11,7 @@
  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-delete-null-pointer-checks")
  
  set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-@@ -51,7 +57,7 @@ endfunction()
+@@ -51,7 +55,7 @@ endfunction()
          set(${OUT_VAL} "" PARENT_SCOPE)
      endif()
  endfunction()
@@ -20,7 +20,7 @@
  
  option(BUILD_CLIENT "Enables building of the client launcher." ON)
  option(BUILD_UI "Enables building of the client ui requires qt." ON)
-@@ -107,6 +113,9 @@ if (APPLE)
+@@ -112,6 +116,9 @@ if (APPLE)
  
  if (APPLE)
      add_subdirectory(osx-elf-header)

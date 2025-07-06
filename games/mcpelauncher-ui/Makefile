@@ -1,6 +1,6 @@
 PORTNAME=	ui
 DISTVERSIONPREFIX=	v
-DISTVERSION=	0.14.3
+DISTVERSION=	1.4.1
 DISTVERSIONSUFFIX=	-qt6
 CATEGORIES=	games
 PKGNAMEPREFIX=	mcpelauncher-
@@ -18,13 +18,13 @@ USE_GITHUB=	yes
 GH_ACCOUNT=	minecraft-linux
 GH_PROJECT=	mcpelauncher-ui-manifest
 GH_TUPLE=	MCMrARM:axml-parser:e5d2610:axmlparser/axml-parser \
-		minecraft-linux:file-util:ce7d0d6:fileutil/file-util \
-		minecraft-linux:Google-Play-API:7940ada:googleplayapi/google-play-api \
-		minecraft-linux:mcpelauncher-apkinfo:04dd54b:mcpelauncherapkinfo/mcpelauncher-apkinfo \
+		minecraft-linux:file-util:3e7be1e:fileutil/file-util \
+		minecraft-linux:Google-Play-API:c8d2452:googleplayapi/google-play-api \
+		minecraft-linux:mcpelauncher-apkinfo:ebd853b:mcpelauncherapkinfo/mcpelauncher-apkinfo \
 		minecraft-linux:mcpelauncher-common:277c84a:mcpelaunchercommon/mcpelauncher-common \
-		minecraft-linux:mcpelauncher-extract:82a841a:mcpelauncherextract/mcpelauncher-extract \
-		minecraft-linux:mcpelauncher-ui-qt:ca0e99d:mcpelauncheruiqt/mcpelauncher-ui-qt \
-		minecraft-linux:playdl-signin-ui-qt:02a89aa:playdlsigninuiqt/playdl-signin-ui-qt
+		minecraft-linux:mcpelauncher-extract:1d447c0:mcpelauncherextract/mcpelauncher-extract \
+		minecraft-linux:mcpelauncher-ui-qt:f976c6c:mcpelauncheruiqt/mcpelauncher-ui-qt \
+		minecraft-linux:playdl-signin-ui-qt:1f080c9:playdlsigninuiqt/playdl-signin-ui-qt
 
 CMAKE_OFF=	LAUNCHER_ENABLE_GLFW
 # Allow piracy?
