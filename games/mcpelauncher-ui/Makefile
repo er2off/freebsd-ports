@@ -11,7 +11,7 @@ WWW=		https://mcpelauncher.readthedocs.io/
 
 LICENSE=	GPLv3
 
-USES=		cmake compiler:c++17-lang gl pkgconfig qt:6
+USES=		cmake compiler:c++17-lang desktop-file-utils gl pkgconfig qt:6
 USE_GL=		gl egl glesv2
 USE_QT=		base webengine
 USE_GITHUB=	yes
